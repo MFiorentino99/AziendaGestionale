@@ -282,7 +282,7 @@ namespace AziendaGestionale.Controllers
             }
         }
         [HttpGet("/IncaricoADataFattura")]
-        public async Task<ActionResult> JobInRecipeDate()
+        public async Task<ActionResult> RoleInInvoiceDate()
         {
             string query = $"SELECT DISTINCT RTRIM(T.ID_DIPENDENTE) ID_DIPENDENTE, RTRIM(G.SETTORE) SETTORE," +
                 $"RTRIM(G.CATEGORIA) CATEGORIA,T.DATA_RECENTE," +

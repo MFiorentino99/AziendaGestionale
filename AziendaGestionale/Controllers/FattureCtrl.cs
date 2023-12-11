@@ -220,7 +220,8 @@ namespace AziendaGestionale.Controllers
         [HttpDelete("{id}/{data}")]
         public async Task<IActionResult> DeleteFattura(string id,string data)
         {
-            string query = $"DELETE FROM {_tableName} WHERE RTRIM(ID_FATTURA)=:ID_FATTURA AND DATA_VENDITA=:DATA_VENDITA ";
+            string query = $"DELETE FROM {_tableName} WHERE" +
+                $" RTRIM(ID_FATTURA)=:ID_FATTURA AND DATA_VENDITA=:DATA_VENDITA ";
             DateTime d = DataConverter(data);
             using (var conn = new OracleConnection(_connectionString))
             {
@@ -268,14 +269,6 @@ namespace AziendaGestionale.Controllers
             {
                 var resp = await connection.ExecuteAsync(query);
                 return Ok(resp);
-                /*if(resp == 1)
-                {
-                    return Ok("Aggiornamento totale effettuato");
-                }
-                else
-                {
-                    return NotFound("Aggiornamento fallito");
-                }*/
             }
         }
 

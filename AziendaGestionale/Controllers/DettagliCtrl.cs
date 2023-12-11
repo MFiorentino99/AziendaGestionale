@@ -264,7 +264,6 @@ namespace AziendaGestionale.Controllers
                 {
                     return false;   
                 }
-               
             }
             /*
             private static DettaglioDTO ItemToDTO(Dettaglio d)

@@ -249,34 +249,36 @@ namespace AziendaGestionale.Controllers
         }
 
         [HttpGet]
-        [Route("/noSettore/{settoreId}")]
+        [Route("/NoSettore/{settoreId}")]
         public async Task<IActionResult> NoVendor(string settoreId)
         {
-            string query = $"SELECT rtrim(d.nome) nome, d.settore FROM {_tableName} d WHERE rtrim(d.settore)<>:settore ";
+            string query = $"SELECT RTRIM(D.NOME) NOME, D.SETTORE FROM {_tableName} D " +
+                $"WHERE RTRIM(D.SETTORE)<>:SETTORE ";
           
             using (var connection = new OracleConnection(_connectionString))
             {
-                var res = await connection.QueryAsync<DipendenteDTO>(
-                        query, new {settore = settoreId });
+                var res = await connection.QueryAsync(query, new {settore = settoreId });
                 return Ok(res);
             }
         }
 
         [HttpGet]
-        [Route("/migliorVenditore/{min}-{max}")]
+        [Route("/MigliorVenditore/{min}-{max}")]
         public  async Task<ActionResult> BestVendor(int min,int max)
         {
-            string query = $"select RTRIM(ID_DIPENDENTE) ID_DIPENDENTE, RTRIM(Nome) NOME, RTRIM(Cognome) COGNOME, RTRIM(SETTORE) SETTORE, RTRIM(CATEGORIA) CATEGORIA, STIPENDIO " +
-                $"from {_tableName} WHERE id_dipendente in( " +
-                $"select id_venditore from (" +
-                    $" select id_venditore,count(id_venditore) as N_Vendite from a_fattura" +
-                    $" WHERE EXTRACT(YEAR FROM DATA_VENDITA) BETWEEN :ANNO_MIN AND :ANNO_MAX group by(id_venditore))" +
-                    $" where N_Vendite IN " +
-                        $" (select max(N_Vendite) " +
-                        $"from( " +
-                            $" select id_venditore,count(id_venditore) as N_Vendite " +
-                            $"from a_fattura" +
-                            $" WHERE EXTRACT(YEAR FROM DATA_VENDITA)  BETWEEN :ANNO_MIN AND :ANNO_MAX group by(id_venditore))))";
+            string query = 
+                $"SELECT RTRIM(ID_DIPENDENTE) ID_DIPENDENTE, RTRIM(NOME) NOME, RTRIM(COGNOME) COGNOME, RTRIM(SETTORE) SETTORE, RTRIM(CATEGORIA) CATEGORIA, STIPENDIO " +
+                $"FROM {_tableName} WHERE ID_DIPENDENTE IN( " +
+                    $"SELECT ID_VENDITORE FROM (" +
+                        $" SELECT ID_VENDITORE,COUNT(ID_VENDITORE) AS N_Vendite FROM A_FATTURA" +
+                        $" WHERE EXTRACT(YEAR FROM DATA_VENDITA) BETWEEN :ANNO_MIN AND :ANNO_MAX GROUP BY(ID_VENDITORE))" +
+                        $" WHERE N_Vendite IN " +
+                            $" (SELECT MAX(N_Vendite) " +
+                            $"FROM( " +
+                                $"SELECT ID_VENDITORE,COUNT(ID_VENDITORE) AS N_Vendite " +
+                                $"FROM A_FATTURA " +
+                                $"WHERE EXTRACT(YEAR FROM DATA_VENDITA) BETWEEN :ANNO_MIN AND :ANNO_MAX " +
+                                $"GROUP BY(ID_VENDITORE))))";
             using (var connecction = new OracleConnection(_connectionString))
             {
                 var res = await connecction.QueryAsync<DipendenteDTO>(query, new
@@ -290,19 +292,19 @@ namespace AziendaGestionale.Controllers
 
 
         [HttpGet]
-        [Route("/concatNomeCognome")]
+        [Route("/Concat_NomeCognome")]
         public async Task<ActionResult> Concat()
         {
             string query = $"SELECT RTRIM(NOME) || ' ' || RTRIM(COGNOME) AS CREDENZIALI FROM {_tableName}";
             using (var connection = new OracleConnection( _connectionString))
             {
-                var resp = connection.QueryAsync(query);
+                var resp = await connection.QueryAsync(query);
                 return Ok(resp);
             }
         }
 
         [HttpGet]
-        [Route("/cognomeLungo")]
+        [Route("/CognomeLungo")]
         public async Task<ActionResult<DipendenteDTO>> cognomeLungo()
         {
             string query = $"SELECT RTRIM(ID_DIPENDENTE) ID_DIPENDENTE, RTRIM(Nome) NOME, RTRIM(Cognome) COGNOME,LENGTH(TRIM(COGNOME)) AS COGNOME_LENGTH, RTRIM(SETTORE) SETTORE, RTRIM(CATEGORIA) CATEGORIA, STIPENDIO " +
@@ -334,7 +336,7 @@ namespace AziendaGestionale.Controllers
                 ;
             using (var conn=new OracleConnection(_connectionString))
             {
-                var resp =await conn.QueryAsync<DipendenteDTO>(query);
+                var resp =await conn.QueryAsync(query);
                 return Ok(resp);
             }
         }
