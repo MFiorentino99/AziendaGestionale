@@ -291,7 +291,7 @@ namespace AziendaGestionale.Controllers
                     $"SELECT G.ID_DIPENDENTE,MAX(G.DATA_ASSEGNAZIONE) DATA_RECENTE,F.DATA_VENDITA, F.ID_FATTURA " +
                     $"FROM {_tableName} G " +
                     $"JOIN A_FATTURA F ON G.ID_DIPENDENTE=F.ID_VENDITORE " +
-                    $"WHERE F.DATA_VENDITA > G.DATA_ASSEGNAZIONE " +
+                    $"WHERE F.DATA_VENDITA >= G.DATA_ASSEGNAZIONE " +
                     $"GROUP BY (G.ID_DIPENDENTE,F.DATA_VENDITA, F.ID_FATTURA) )T" +
                 $" JOIN {_tableName} G ON RTRIM(G.ID_DIPENDENTE)=RTRIM(T.ID_DIPENDENTE) " +
                 $"WHERE T.DATA_RECENTE = G.DATA_ASSEGNAZIONE " +
