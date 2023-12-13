@@ -333,7 +333,7 @@ namespace AziendaGestionale.Controllers
             }
             catch (FormatException e){
                 BadRequest(e.Message);
-                return today;
+                return DateTime.Parse("00/00/0000", CultureInfo.InvariantCulture);
             }
 
             

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -51,7 +49,7 @@ namespace Test.Queries
                 }
             }
         }
-        public async Task<bool> CreateElement(DTOProdotto prodotto)
+        public bool CreateElement(DTOProdotto prodotto)
         {
             string query = $@"INSERT INTO {_tableName} 
                             (NOME,CATEGORIA,COSTO_PRODUZIONE)
@@ -60,7 +58,7 @@ namespace Test.Queries
             {
                 if (!ElementExists(prodotto.Nome))
                 {
-                    await conn.ExecuteAsync(query, new
+                    conn.ExecuteAsync(query, new
                     {
                         NOME = prodotto.Nome,
                         CATEGORIA = prodotto.Categoria,
@@ -75,7 +73,7 @@ namespace Test.Queries
             }
         }
 
-        public async Task<bool> UpdateOneById(string nome,DTOProdotto prodotto)
+        public bool UpdateOneById(string nome,DTOProdotto prodotto)
         {
             string query = $@"UPDATE {_tableName} SET CATEGORIA=:CATEGORIA, COSTO_PRODUZIONE=:COSTO
                             WHERE RTRIM(NOME)=LOWER(:NOME)";
@@ -83,7 +81,7 @@ namespace Test.Queries
             {
                 if (ElementExists(nome))
                 {
-                    await conn.ExecuteAsync(query, new
+                    conn.ExecuteAsync(query, new
                     {
                         NOME = nome,
                         CATEGORIA = prodotto.Categoria,
@@ -97,14 +95,14 @@ namespace Test.Queries
                 }
             }
         }
-        public async Task<bool> DeleteOneById(string nome)
+        public bool DeleteOneById(string nome)
         {
             string query = $@"DELETE FROM {_tableName} WHERE RTRIM(NOME)=LOWER(:NOME)";
             using (var conn = new OracleConnection(_connectionString))
             {
                 if (ElementExists(nome))
                 {
-                    await conn.ExecuteAsync(query, new { NOME = nome });
+                    conn.ExecuteAsync(query, new { NOME = nome });
                     return true;
                 }
                 else

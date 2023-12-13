@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Test.Abstractions
 {
@@ -12,9 +10,9 @@ namespace Test.Abstractions
     {
         public Task<IEnumerable<T>> GetAll();
         public Task<T> GetOneByID(string id);
-        public Task<bool> UpdateOneById(string id,T element);
-        public Task<bool> CreateElement(T element);
-        public Task<bool> DeleteOneById(string id);
+        public bool UpdateOneById(string id,T element);
+        public bool CreateElement(T element);
+        public bool DeleteOneById(string id);
         public bool ElementExists(string id);
 
 

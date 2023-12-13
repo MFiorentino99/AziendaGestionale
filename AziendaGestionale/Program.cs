@@ -1,5 +1,8 @@
 using AziendaGestionale.Models;
 using Microsoft.EntityFrameworkCore;
+using Test.Abstractions;
+using Test.Models;
+using Test.Queries;
 
 
 
@@ -9,6 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSingleton<IHttpCall<DTOProdotto>, ProdottiQueries>();
+builder.Services.AddSingleton<IHttpCallMoreThanOneId<DTOGestione>, GestioneQueries>();
 
 var app = builder.Build();
 
