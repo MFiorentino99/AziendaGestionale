@@ -41,14 +41,7 @@ namespace Test.Queries
             {
 
                 var res = await conn.QuerySingleAsync<DTOProdotto>(find, new { NOME = nome });
-                if (res != null)
-                {
-                    return res;
-                }
-                else
-                {
-                    return null;
-                }
+                return res;
             }
         }
     }

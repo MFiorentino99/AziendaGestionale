@@ -15,8 +15,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IProdottiQueries,ProdottiQueries>();
-builder.Services.AddScoped<IProdottiRepository,ProdottiRepository>();
+builder.Services.AddScoped<IProdottiQueries, ProdottiQueries>();
+builder.Services.AddScoped<IProdottiRepository, ProdottiRepository>();
+builder.Services.AddScoped<IGestioneQuery, GestioneQueries>();
+builder.Services.AddScoped<IGestioneRepository, GestioneRepository>();
 
 var app = builder.Build();
 

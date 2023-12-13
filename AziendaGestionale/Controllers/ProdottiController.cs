@@ -8,7 +8,7 @@ using Test.Repositories;
 
 namespace AziendaGestionale.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[Prodotti]")]
     [ApiController]
     public class ProdottiController : ControllerBase
     {

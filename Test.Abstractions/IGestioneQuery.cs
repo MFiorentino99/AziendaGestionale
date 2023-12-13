@@ -10,9 +10,8 @@ namespace Test.Abstractions
     public  interface IGestioneQuery
     {
         public Task<IEnumerable<DTOGestione>> GetAll();
-        public Task<DTOGestione> GetGestioneById(string id, string id2);
-        public bool UpdateGestioneById(string id, string id2, DTOGestione element);
-        public bool CreateGestione(DTOGestione element);
-        public bool DeletegestoineById(string id, string id2);
+        public Task<DTOGestione> GetGestioneById(string id, string date);
+        public DateTime DateConverter(string date);
+        public Task<IEnumerable<dynamic>> RoleInInvoiceDate();
     }
 }
