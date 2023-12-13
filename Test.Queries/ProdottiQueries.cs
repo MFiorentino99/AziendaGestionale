@@ -11,7 +11,7 @@ using Dapper;
 
 namespace Test.Queries
 {
-    public class ProdottiQueries : IHttpCall<DTOProdotto>
+    public class ProdottiQueries : IProdottiQueries
     {
         private readonly string _tableName = "A_PRODOTTO";
         private readonly string _connectionString;
@@ -38,10 +38,11 @@ namespace Test.Queries
                             FROM {_tableName} WHERE RTRIM(NOME)=LOWER(:NOME)";
             using (var conn = new OracleConnection(_connectionString))
             {
-                if (ElementExists(nome))
+                
+                    var res = conn.QuerySingle<DTOProdotto>(find, new { NOME = nome });
+                if(res != null)
                 {
-                    var result = await conn.QuerySingleAsync<DTOProdotto>(find, new { NOME = nome });
-                    return result;
+                    return res;
                 }
                 else
                 {
@@ -49,85 +50,7 @@ namespace Test.Queries
                 }
             }
         }
-        public bool CreateElement(DTOProdotto prodotto)
-        {
-            string query = $@"INSERT INTO {_tableName} 
-                            (NOME,CATEGORIA,COSTO_PRODUZIONE)
-                            VALUES (LOWER(:NOME), :CATEGORIA, :COSTO)";
-            using (var conn = new OracleConnection(_connectionString))
-            {
-                if (!ElementExists(prodotto.Nome))
-                {
-                    conn.ExecuteAsync(query, new
-                    {
-                        NOME = prodotto.Nome,
-                        CATEGORIA = prodotto.Categoria,
-                        COSTO = prodotto.Costo_produzione
-                    });
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
+        
 
-        public bool UpdateOneById(string nome,DTOProdotto prodotto)
-        {
-            string query = $@"UPDATE {_tableName} SET CATEGORIA=:CATEGORIA, COSTO_PRODUZIONE=:COSTO
-                            WHERE RTRIM(NOME)=LOWER(:NOME)";
-            using (var conn = new OracleConnection(_connectionString))
-            {
-                if (ElementExists(nome))
-                {
-                    conn.ExecuteAsync(query, new
-                    {
-                        NOME = nome,
-                        CATEGORIA = prodotto.Categoria,
-                        COSTO = prodotto.Costo_produzione
-                    });
-                    return true;
-                }
-                else
-                {
-                    return false; 
-                }
-            }
-        }
-        public bool DeleteOneById(string nome)
-        {
-            string query = $@"DELETE FROM {_tableName} WHERE RTRIM(NOME)=LOWER(:NOME)";
-            using (var conn = new OracleConnection(_connectionString))
-            {
-                if (ElementExists(nome))
-                {
-                    conn.ExecuteAsync(query, new { NOME = nome });
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-        public bool ElementExists(string id)
-        {
-            string find = $@"SELECT * FROM {_tableName} WHERE RTRIM(NOME)=LOWER(:NOME)";
-            using (var conn = new OracleConnection(_connectionString))
-            {
-                var resp = conn.Query<DTOProdotto>(find, new { NOME = id });
-                if (resp.Count() != 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-
-            }
-
-        }
     }
 }

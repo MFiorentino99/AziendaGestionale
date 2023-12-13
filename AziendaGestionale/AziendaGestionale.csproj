@@ -21,8 +21,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Test.Abstractions\Test.Abstractions.csproj" />
+    <ProjectReference Include="..\Test.InterfacesRepository\Test.InterfacesRepository.csproj" />
     <ProjectReference Include="..\Test.Models\Test.Models.csproj" />
     <ProjectReference Include="..\Test.Queries\Test.Queries.csproj" />
+    <ProjectReference Include="..\Test.Repositories\Test.Repositories.csproj" />
   </ItemGroup>
 
 </Project>
