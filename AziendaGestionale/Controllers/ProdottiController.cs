@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Test.Models;
 using Test.Queries;
+using Test.Repositories;
 
 
 
@@ -12,9 +13,11 @@ namespace AziendaGestionale.Controllers
     public class ProdottiController : ControllerBase
     {
         private readonly ProdottiQueries _prodottiQueries;
-        public ProdottiController(ProdottiQueries prodottiQueries)
+        private readonly ProdottiRepository _prodottiRepository;
+        public ProdottiController(ProdottiQueries prodottiQueries,ProdottiRepository prodottiRepository)
         {
             _prodottiQueries = prodottiQueries;
+            _prodottiRepository = prodottiRepository;
         }
         
         [HttpGet]
@@ -26,7 +29,7 @@ namespace AziendaGestionale.Controllers
         [HttpGet("{nome}")]
         public ActionResult<DTOProdotto> GetById(string id)
         {
-            var response = _prodottiQueries.GetOneByID(id);
+            var response = _prodottiQueries.GetProdottoByID(id);
             if(response != null)
             {
                 return Ok(response);
@@ -40,7 +43,7 @@ namespace AziendaGestionale.Controllers
         [HttpPost]
         public ActionResult Post(DTOProdotto element)
         {
-            var response = _prodottiQueries.CreateElement(element);
+            var response = _prodottiRepository.CreateProdotto(element);
             if (response )
             {
                 return Ok("Inserimento eseguito con successo");
@@ -54,7 +57,7 @@ namespace AziendaGestionale.Controllers
         [HttpPut("{nome}")]
         public ActionResult Put(string nome, DTOProdotto element)
         {
-            bool resposne = _prodottiQueries.UpdateOneById(nome, element);
+            bool resposne = _prodottiRepository.UpdateProdottoById(nome,element);
             if (resposne)
             {
                 return Ok("Aggiornamento eseguito con successo");
@@ -69,7 +72,7 @@ namespace AziendaGestionale.Controllers
         [HttpDelete("{nome}")]
         public ActionResult Delete(string nome)
         {
-            bool response = _prodottiQueries.DeleteOneById(nome);
+            bool response = _prodottiRepository.DeleteProdototById(nome);
             if(response)
             {
                 return Ok("Cancellazione eseguita con successo");

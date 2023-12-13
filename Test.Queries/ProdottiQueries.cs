@@ -32,15 +32,16 @@ namespace Test.Queries
             }
         }
 
-        public async Task<DTOProdotto> GetOneByID(string nome)
+
+        public async Task<DTOProdotto> GetProdottoByID(string nome)
         {
             string find = $@"SELECT RTRIM(NOME) NOME, RTRIM(CATEGORIA) CATEGORIA, COSTO_PRODUZIONE
                             FROM {_tableName} WHERE RTRIM(NOME)=LOWER(:NOME)";
             using (var conn = new OracleConnection(_connectionString))
             {
-                
-                    var res = conn.QuerySingle<DTOProdotto>(find, new { NOME = nome });
-                if(res != null)
+
+                var res = await conn.QuerySingleAsync<DTOProdotto>(find, new { NOME = nome });
+                if (res != null)
                 {
                     return res;
                 }
@@ -50,7 +51,5 @@ namespace Test.Queries
                 }
             }
         }
-        
-
     }
 }
