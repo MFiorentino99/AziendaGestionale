@@ -13,7 +13,7 @@ using System.Text;
 using Dapper;
 using System.Drawing;
 
-namespace AziendaGestionale.Controllers
+namespace AziendaGestionale.Controllers.Ctrl
 {
     //[Route("api/DipendentiCtrl")]
     //[ApiController]
@@ -36,7 +36,7 @@ namespace AziendaGestionale.Controllers
                 string query =
                     $"SELECT RTRIM(ID_DIPENDENTE) ID_DIPENDENTE, RTRIM(NOME) NOME, RTRIM(COGNOME) COGNOME, STIPENDIO, RTRIM(SETTORE) SETTORE, RTRIM(CATEGORIA) CATEGORIA" +
                     $" FROM {_tableName}";
-                var resp = await connection.QueryAsync<DipendenteDTO>(query); 
+                var resp = await connection.QueryAsync<DipendenteDTO>(query);
                 return Ok(resp);
             }
 
@@ -67,10 +67,10 @@ namespace AziendaGestionale.Controllers
 
             return ItemToDTO(dipendente);
            */
-           
-             string query =
-                $"SELECT ID_DIPENDENTE, RTRIM(NOME) NOME,RTRIM(COGNOME) COGNOME,STIPENDIO,RTRIM(SETTORE) SETTORE, RTRIM(CATEGORIA) CATEGORIA " +
-                $"FROM {_tableName} WHERE RTRIM(ID_DIPENDENTE) =:ID_DIPENDENTE";
+
+            string query =
+               $"SELECT ID_DIPENDENTE, RTRIM(NOME) NOME,RTRIM(COGNOME) COGNOME,STIPENDIO,RTRIM(SETTORE) SETTORE, RTRIM(CATEGORIA) CATEGORIA " +
+               $"FROM {_tableName} WHERE RTRIM(ID_DIPENDENTE) =:ID_DIPENDENTE";
             using (var connection = new OracleConnection(_connectionString))
             {
                 if (DipendenteExists(id))
@@ -84,25 +84,25 @@ namespace AziendaGestionale.Controllers
                     return NotFound("Dipendente non trovato");
                 }
             }
-               
+
         }
 
         // PUT: api/DipendentiCtrl/5
-  
+
         //[HttpPut("{id}")]
         public async Task<IActionResult> PutDipendente(string id, DipendenteDTO dipendenteDTO)
         {
-            string query = 
+            string query =
                 $"UPDATE {_tableName} SET " +
                 $"COGNOME = :COGNOME, NOME = :NOME, STIPENDIO = :STIPENDIO, SETTORE = :SETTORE, CATEGORIA =:CATEGORIA " +
                 $"WHERE rtrim(ID_DIPENDENTE) =:ID_DIPENDENTE";
-          
+
             using (var connection = new OracleConnection(_connectionString))
             {
                 if (DipendenteExists(id))
                 {
-                    var resp = await  connection.ExecuteAsync(query, new
-                         {
+                    var resp = await connection.ExecuteAsync(query, new
+                    {
                         id_dipendente = id,
                         nome = dipendenteDTO.Nome,
                         cognome = dipendenteDTO.Cognome,
@@ -111,13 +111,14 @@ namespace AziendaGestionale.Controllers
                         categoria = dipendenteDTO.Categoria
                     });
                     return Ok("Aggiornamento eseguito con successo");
-                }else
+                }
+                else
                 {
                     return NotFound("Dipendente non trovato");
                 }
-              
+
             };
-           
+
             /*  if (id != dipendenteDTO.Id_dipendente)
               {
                   return BadRequest();
@@ -163,7 +164,7 @@ namespace AziendaGestionale.Controllers
             {
                 if (!DipendenteExists(dipendenteDTO.Id_dipendente))
                 {
-                    var resp =await  connection.ExecuteAsync(query, new
+                    var resp = await connection.ExecuteAsync(query, new
                     {
                         ID_DIPENDENTE = dipendenteDTO.Id_dipendente,
                         NOME = dipendenteDTO.Nome,
@@ -179,7 +180,7 @@ namespace AziendaGestionale.Controllers
                     return BadRequest("Dipendente già esistente");
                 }
             };
-               
+
             /*
             var dipendente = new Dipendente
             {
@@ -219,15 +220,16 @@ namespace AziendaGestionale.Controllers
         public async Task<IActionResult> DeleteDipendente(string id)
         {
             string query = $"DELETE FROM {_tableName} WHERE RTRIM(ID_DIPENDENTE) =:ID_DIPENDENTE";
-            using(var connection = new OracleConnection(_connectionString))
+            using (var connection = new OracleConnection(_connectionString))
             {
                 if (DipendenteExists(id))
                 {
                     var resp = await connection.ExecuteAsync(query, new { ID_DIPENDENTE = id });
                     return Ok("Cancellazione eseguita con successo");
-                }else 
-                {  
-                    return BadRequest(); 
+                }
+                else
+                {
+                    return BadRequest();
                 }
             }
             /*
@@ -254,19 +256,19 @@ namespace AziendaGestionale.Controllers
         {
             string query = $"SELECT RTRIM(D.NOME) NOME, D.SETTORE FROM {_tableName} D " +
                 $"WHERE RTRIM(D.SETTORE)<>:SETTORE ";
-          
+
             using (var connection = new OracleConnection(_connectionString))
             {
-                var res = await connection.QueryAsync(query, new {settore = settoreId });
+                var res = await connection.QueryAsync(query, new { settore = settoreId });
                 return Ok(res);
             }
         }
 
         //[HttpGet]
         //[Route("/MigliorVenditore/{min}-{max}")]
-        public  async Task<ActionResult> BestVendor(int min,int max)
+        public async Task<ActionResult> BestVendor(int min, int max)
         {
-            string query = 
+            string query =
                 $"SELECT RTRIM(ID_DIPENDENTE) ID_DIPENDENTE, RTRIM(NOME) NOME, RTRIM(COGNOME) COGNOME, RTRIM(SETTORE) SETTORE, RTRIM(CATEGORIA) CATEGORIA, STIPENDIO " +
                 $"FROM {_tableName} WHERE ID_DIPENDENTE IN( " +
                     $"SELECT ID_VENDITORE FROM (" +
@@ -296,7 +298,7 @@ namespace AziendaGestionale.Controllers
         public async Task<ActionResult> Concat()
         {
             string query = $"SELECT RTRIM(NOME) || ' ' || RTRIM(COGNOME) AS CREDENZIALI FROM {_tableName}";
-            using (var connection = new OracleConnection( _connectionString))
+            using (var connection = new OracleConnection(_connectionString))
             {
                 var resp = await connection.QueryAsync(query);
                 return Ok(resp);
@@ -316,9 +318,9 @@ namespace AziendaGestionale.Controllers
                         $"FROM {_tableName}))";
 
 
-            using (var connection = new OracleConnection (_connectionString))
+            using (var connection = new OracleConnection(_connectionString))
             {
-                var resp = await connection.QueryAsync(query); 
+                var resp = await connection.QueryAsync(query);
                 return Ok(resp);
             }
         }
@@ -331,12 +333,12 @@ namespace AziendaGestionale.Controllers
                 $"FROM {_tableName} " +
                 $"WHERE ID_DIPENDENTE NOT IN (" +
                     $"SELECT ID_DIPENDENTE" +
-                    $" FROM A_GESTIONE ) " 
+                    $" FROM A_GESTIONE ) "
                 //+ $" AND SETTORE IS NULL"
                 ;
-            using (var conn=new OracleConnection(_connectionString))
+            using (var conn = new OracleConnection(_connectionString))
             {
-                var resp =await conn.QueryAsync(query);
+                var resp = await conn.QueryAsync(query);
                 return Ok(resp);
             }
         }
@@ -348,27 +350,28 @@ namespace AziendaGestionale.Controllers
             using (var connection = new OracleConnection(_connectionString))
             {
                 var dip = connection.Query<DipendenteDTO>(find, new { ID_DIPENDENTE = id });
-                if (dip.Count()==0)
-                { 
-                    return false; 
+                if (dip.Count() == 0)
+                {
+                    return false;
                 }
-                else {
-                    return true; 
+                else
+                {
+                    return true;
                 }
             }
         }
-/*
-        private static DipendenteDTO ItemToDTO(Dipendente dipendente)
-        {
-            return new DipendenteDTO
-            { 
-               Id_dipendente = dipendente.Id_dipendente,
-               Cognome = dipendente.Cognome,
-               Nome = dipendente.Nome,  
-               Settore = dipendente.Settore,
-               Stipendio = dipendente.Stipendio
-            };
-        }
-*/
+        /*
+                private static DipendenteDTO ItemToDTO(Dipendente dipendente)
+                {
+                    return new DipendenteDTO
+                    { 
+                       Id_dipendente = dipendente.Id_dipendente,
+                       Cognome = dipendente.Cognome,
+                       Nome = dipendente.Nome,  
+                       Settore = dipendente.Settore,
+                       Stipendio = dipendente.Stipendio
+                    };
+                }
+        */
     }
 }

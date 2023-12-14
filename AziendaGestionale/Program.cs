@@ -24,6 +24,10 @@ builder.Services.AddScoped<IFattureQueries, FattureQueries>();
 builder.Services.AddScoped<IFattureRepository, FattureRepository>();
 builder.Services.AddScoped<IDipendentiQueries, DipendentiQueries>();
 builder.Services.AddScoped<IDipendentiRepository, DipendentiRepository>();
+builder.Services.AddScoped<IDettagliQueries, DettagliQueries>();
+builder.Services.AddScoped<IDettagliRepository, DettagliRepository>();
+builder.Services.AddScoped<IClientiQueries, ClientiQueries>();
+builder.Services.AddScoped<IClientiRepository, ClientiRepository>();
 
 var app = builder.Build();
 

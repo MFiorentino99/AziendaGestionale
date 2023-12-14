@@ -11,7 +11,7 @@ using AziendaGestionale.Models.DTO;
 using Oracle.ManagedDataAccess.Client;
 using Dapper;
 
-namespace AziendaGestionale.Controllers
+namespace AziendaGestionale.Controllers.Ctrl
 {
     //[Route("api/DettagliCtrl")]
     //[ApiController]
@@ -26,7 +26,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // GET: api/DettagliCtrl
-       // [HttpGet]
+        // [HttpGet]
         public async Task<ActionResult<IEnumerable<DettaglioDTO>>> GetDettaglio()
         {
             string query = $"SELECT RTRIM(ID_FATTURA) ID_FATTURA, RTRIM(PRODOTTO) PRODOTTO, QUANTITY AS QUANTITA, COSTO" +
@@ -66,7 +66,7 @@ namespace AziendaGestionale.Controllers
                 {
                     return NotFound("Dettaglio non trovato");
                 }
-               
+
             }
 
             /*
@@ -91,7 +91,7 @@ namespace AziendaGestionale.Controllers
         public async Task<IActionResult> PutDettaglio(string id, string prodotto, DettaglioDTO dettaglioDTO)
         {
             string query = $"UPDATE {_tableName} SET " +
-                $" COSTO =:COSTO, QUANTITY  =:QUANTITA "+
+                $" COSTO =:COSTO, QUANTITY  =:QUANTITA " +
                 $"WHERE RTRIM(ID_FATTURA)=:ID_FATTURA AND RTRIM(PRODOTTO) =LOWER(:PRODOTTO)";
             using (var conn = new OracleConnection(_connectionString))
             {
@@ -207,7 +207,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // DELETE: api/DettagliCtrl/5
-       // [HttpDelete("{id}-{prodotto}")]
+        // [HttpDelete("{id}-{prodotto}")]
         public async Task<IActionResult> DeleteDettaglio(string id, string prodotto)
         {
             string query = $"DELETE FROM {_tableName} WHERE RTRIM(ID_FATTURA)=:ID_FATTURA AND RTRIM(PRODOTTO)=LOWER(:PRODOTTO)";
@@ -256,13 +256,13 @@ namespace AziendaGestionale.Controllers
                     ID_FATTURA = id,
                     PRODOTTO = prod
                 });
-                 if(resp.Count() != 0)
+                if (resp.Count() != 0)
                 {
                     return true;
                 }
                 else
                 {
-                    return false;   
+                    return false;
                 }
             }
             /*
