@@ -13,8 +13,10 @@ using Dapper;
 
 namespace AziendaGestionale.Controllers
 {
+    /*
     [Route("api/ProdottiCtrl")]
     [ApiController]
+    */
     public class ProdottiCtrl : ControllerBase
     {
         private readonly Context _context;
@@ -26,7 +28,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // GET: api/ProdottiCtrl
-        [HttpGet]
+        //[HttpGet]
         public async Task<ActionResult<IEnumerable<ProdottoDTO>>> GetProdotto()
         {
             string query = $"SELECT RTRIM(NOME) NOME, RTRIM(CATEGORIA) CATEGORIA, COSTO_PRODUZIONE" +
@@ -48,7 +50,7 @@ namespace AziendaGestionale.Controllers
        
 
         // GET: api/ProdottiCtrl/5
-        [HttpGet("{nome}")]
+        //[HttpGet("{nome}")]
         public async Task<ActionResult<ProdottoDTO>> GetProdotto(string nome)
         {
             string find = $"SELECT RTRIM(NOME) NOME, RTRIM(CATEGORIA) CATEGORIA, COSTO_PRODUZIONE" +
@@ -84,7 +86,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // PUT: api/ProdottiCtrl/5
-        [HttpPut("{nome}")]
+        //[HttpPut("{nome}")]
         public async Task<IActionResult> PutProdotto(string nome, ProdottoDTO prodottoDTO)
         {
             string query = $"UPDATE {_tableName} SET CATEGORIA=:CATEGORIA, COSTO_PRODUZIONE=:COSTO " +
@@ -144,7 +146,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // POST: api/ProdottiCtrl
-        [HttpPost]
+        //[HttpPost]
         public async Task<ActionResult<ProdottoDTO>> PostProdotto(ProdottoDTO prodottoDTO)
         {
             string query = $"INSERT INTO {_tableName} " +
@@ -201,7 +203,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // DELETE: api/ProdottiCtrl/5
-        [HttpDelete("{nome}")]
+        //[HttpDelete("{nome}")]
         public async Task<IActionResult> DeleteProdotto(string nome)
         {
             string query = $"DELETE FROM {_tableName} WHERE RTRIM(NOME)=LOWER(:NOME)";

@@ -3,18 +3,20 @@ using Microsoft.AspNetCore.Mvc;
 using Test.Models;
 using Test.Queries;
 using Test.Repositories;
-
+using Oracle.ManagedDataAccess.Client;
+using Test.Abstractions;
+using Test.InterfacesRepository;
 
 
 namespace AziendaGestionale.Controllers
 {
-    [Route("api/[Prodotti]")]
+    [Route("api/Prodotti")]
     [ApiController]
     public class ProdottiController : ControllerBase
     {
-        private readonly ProdottiQueries _prodottiQueries;
-        private readonly ProdottiRepository _prodottiRepository;
-        public ProdottiController(ProdottiQueries prodottiQueries,ProdottiRepository prodottiRepository)
+        private readonly IProdottiQueries _prodottiQueries;
+        private readonly IProdottiRepository _prodottiRepository;
+        public ProdottiController(IProdottiQueries prodottiQueries,IProdottiRepository prodottiRepository)
         {
             _prodottiQueries = prodottiQueries;
             _prodottiRepository = prodottiRepository;
@@ -23,13 +25,13 @@ namespace AziendaGestionale.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<DTOProdotto>> GetAll()
         {
-            return Ok(_prodottiQueries.GetAll());
+            return Ok(_prodottiQueries.GetAll().Result);
         }
         
         [HttpGet("{nome}")]
-        public ActionResult<DTOProdotto> GetById(string id)
+        public ActionResult<DTOProdotto> GetById(string nome)
         {
-            var response = _prodottiQueries.GetProdottoByID(id);
+            var response = _prodottiQueries.GetProdottoByID(nome).Result;
             if(response != null)
             {
                 return Ok(response);

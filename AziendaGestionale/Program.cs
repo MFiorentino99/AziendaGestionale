@@ -1,3 +1,4 @@
+using AziendaGestionale.Controllers;
 using AziendaGestionale.Models;
 using Microsoft.EntityFrameworkCore;
 using Test.Abstractions;
@@ -19,6 +20,8 @@ builder.Services.AddScoped<IProdottiQueries, ProdottiQueries>();
 builder.Services.AddScoped<IProdottiRepository, ProdottiRepository>();
 builder.Services.AddScoped<IGestioneQuery, GestioneQueries>();
 builder.Services.AddScoped<IGestioneRepository, GestioneRepository>();
+builder.Services.AddScoped<IFattureQueries, FattureQueries>();
+builder.Services.AddScoped<IFattureRepository, FattureRepository>();
 
 var app = builder.Build();
 

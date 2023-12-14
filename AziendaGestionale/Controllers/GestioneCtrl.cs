@@ -14,8 +14,8 @@ using Dapper;
 
 namespace AziendaGestionale.Controllers
 {
-    [Route("api/GestioneCtrl")]
-    [ApiController]
+   // [Route("api/GestioneCtrl")]
+   // [ApiController]
     public class GestioneCtrl : ControllerBase
     {
         private readonly Context _context;
@@ -28,7 +28,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // GET: api/GestioneCtrl
-        [HttpGet]
+       // [HttpGet]
         public async Task<ActionResult<IEnumerable<GestioneDTO>>> GetGestione()
         {
             string query = $"SELECT RTRIM(ID_DIPENDENTE) ID_DIPENDENTE, DATA_ASSEGNAZIONE, RTRIM(SETTORE) SETTORE, RTRIM(CATEGORIA) CATEGORIA" +
@@ -56,7 +56,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // GET: api/GestioneCtrl/5
-        [HttpGet("{id}/{data}")]
+        //[HttpGet("{id}/{data}")]
         public async Task<ActionResult<GestioneDTO>> GetGestione(string id, string data)
         {
             string query = $"SELECT RTRIM(ID_DIPENDENTE) ID_DIPENDENTE, DATA_ASSEGNAZIONE, RTRIM(SETTORE) SETTORE, RTRIM(CATEGORIA) CATEGORIA " +
@@ -96,7 +96,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // PUT: api/GestioneCtrl/5
-        [HttpPut("{id}/{data}")]
+        //[HttpPut("{id}/{data}")]
         public async Task<IActionResult> PutGestione(string id,string data, GestioneDTO gestioneDTO)
         {
             DateTime d = DateConvert(data);
@@ -163,7 +163,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // POST: api/GestioneCtrl
-        [HttpPost]
+        //[HttpPost]
         public async Task<ActionResult<Gestione>> PostGestione(GestioneDTO gestioneDTO)
         {
             string query = $"INSERT INTO {_tableName} " +
@@ -221,7 +221,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // DELETE: api/GestioneCtrl/5
-        [HttpDelete("{id}/{data}")]
+        //[HttpDelete("{id}/{data}")]
         public async Task<IActionResult> DeleteGestione(string id,string data)
         {
             string query = $"DELETE FROM {_tableName} WHERE RTRIM(ID_DIPENDENTE) =:ID_DIPENDENTE AND DATA_ASSEGNAZIONE=:DATA_ASSEGNAZIONE";
@@ -262,7 +262,7 @@ namespace AziendaGestionale.Controllers
             */
         }
 
-        [HttpPut("/CategoriaInMinuscolo")]
+       // [HttpPut("/CategoriaInMinuscolo")]
         public async Task<ActionResult> CategoriaToLowerCase()
         {
             string query = $"UPDATE {_tableName} SET SETTORE = LOWER(TRIM(SETTORE))," +
@@ -281,7 +281,7 @@ namespace AziendaGestionale.Controllers
                 
             }
         }
-        [HttpGet("/IncaricoADataFattura")]
+       // [HttpGet("/IncaricoADataFattura")]
         public async Task<ActionResult> RoleInInvoiceDate()
         {
             string query = $"SELECT DISTINCT RTRIM(T.ID_DIPENDENTE) ID_DIPENDENTE, RTRIM(G.SETTORE) SETTORE," +

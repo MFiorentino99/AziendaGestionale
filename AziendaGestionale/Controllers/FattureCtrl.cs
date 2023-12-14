@@ -14,8 +14,8 @@ using Dapper;
 
 namespace AziendaGestionale.Controllers
 {
-    [Route("api/FattureCtrl")]
-    [ApiController]
+    //[Route("api/FattureCtrl")]
+    //[ApiController]
     public class FattureCtrl : ControllerBase
     {
         private readonly Context _context;
@@ -28,7 +28,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // GET: api/FattureCtrl
-        [HttpGet]
+        //[HttpGet]
         public async Task<ActionResult<IEnumerable<FatturaDTO>>> GetFattura()
         {
             string query = $"SELECT RTRIM(ID_FATTURA) ID_FATTURA, RTRIM(ID_VENDITORE) ID_VENDITORE, RTRIM(ID_CLIENTE) ID_CLIENTE, DATA_VENDITA, TOTALE" +
@@ -48,7 +48,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // GET: api/FattureCtrl/5
-        [HttpGet("{id}/{data}")]
+        //[HttpGet("{id}/{data}")]
         public async Task<ActionResult<FatturaDTO>> GetFattura(string id, string data)
         {
             string query = $"SELECT RTRIM(ID_FATTURA) ID_FATTURA, RTRIM(ID_VENDITORE) ID_VENDITORE, RTRIM(ID_CLIENTE) ID_CLIENTE, DATA_VENDITA, TOTALE" +
@@ -88,7 +88,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // PUT: api/FattureCtrl/5
-        [HttpPut("{id}/{data}")]
+        //[HttpPut("{id}/{data}")]
         public async Task<IActionResult> PutFattura(string id,string data, FatturaDTO fatturaDTO)
         {
             DateTime d = DataConverter(data);
@@ -154,7 +154,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // POST: api/FattureCtrl
-        [HttpPost]
+        //[HttpPost]
         public async Task<ActionResult<Fattura>> PostFattura(FatturaDTO fatturaDTO)
         {
             
@@ -216,7 +216,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // DELETE: api/FattureCtrl/5
-        [HttpDelete("{id}/{data}")]
+        //[HttpDelete("{id}/{data}")]
         public async Task<IActionResult> DeleteFattura(string id,string data)
         {
             string query = $"DELETE FROM {_tableName} WHERE" +
@@ -257,7 +257,7 @@ namespace AziendaGestionale.Controllers
             */
         }
 
-        [HttpPut("/AggiornaTOT")]
+        //[HttpPut("/AggiornaTOT")]
         public async Task<ActionResult> UpdateTOT()
         {
             string query = $"UPDATE a_fattura SET a_fattura.totale = (" +
@@ -271,7 +271,7 @@ namespace AziendaGestionale.Controllers
             }
         }
 
-        [HttpGet("/IncassoAnnuale")]
+       // [HttpGet("/IncassoAnnuale")]
         public async Task<ActionResult> AnnualIncome()
         {
             string query = $"SELECT EXTRACT(YEAR FROM DATA_VENDITA) AS ANNO, SUM(TOTALE) AS TOTALE_ANNUO " +
@@ -284,7 +284,7 @@ namespace AziendaGestionale.Controllers
             }
         }
 
-        [HttpGet("/IncassoAnnualePerCliente")]
+      //  [HttpGet("/IncassoAnnualePerCliente")]
         public async Task<ActionResult> AnnualIncomePerClient()
         {
             string query = $"SELECT ID_CLIENTE,EXTRACT(YEAR FROM DATA_VENDITA) AS ANNO, SUM(TOTALE) AS TOTALE_ANNUO_CLIENTE " +
@@ -298,7 +298,7 @@ namespace AziendaGestionale.Controllers
             }
         }
 
-        [HttpGet("/DettagliIncassoAnnualePerCliente")]
+      //  [HttpGet("/DettagliIncassoAnnualePerCliente")]
         public async Task<ActionResult> AnnualIncomePerClientDetails()
         {
             string query = $"SELECT TRIM(F.ID_CLIENTE) ID_CLIENTE,TRIM(C.NOME) AS NOME,TRIM(C.COGNOME) AS COGNOME,EXTRACT(YEAR FROM F.DATA_VENDITA) AS ANNO, SUM(TOTALE) AS TOTALE_ANNUO_CLIENTE " +

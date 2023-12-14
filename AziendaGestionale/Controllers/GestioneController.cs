@@ -2,17 +2,20 @@
 using Test.Models;
 using Test.Queries;
 using Test.Repositories;
-
+using Oracle.ManagedDataAccess.Client;
+using Test.Abstractions;
+using Test.Repositories;
+using Test.InterfacesRepository;
 
 namespace AziendaGestionale.Controllers
 {
-    [Route("api/[Gestione]")]
+    [Route("api/Gestione")]
     [ApiController]
     public class GestioneController : ControllerBase
     {
-        private readonly GestioneQueries _gestioneQueries;
-        private readonly GestioneRepository _gestioneRepository;
-        public GestioneController(GestioneQueries queries,GestioneRepository repository) 
+        private readonly IGestioneQuery _gestioneQueries;
+        private readonly IGestioneRepository _gestioneRepository;
+        public GestioneController(IGestioneQuery queries, IGestioneRepository repository) 
         {
             _gestioneQueries = queries;
             _gestioneRepository = repository;
@@ -21,14 +24,14 @@ namespace AziendaGestionale.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<DTOGestione>> GetAll()
         {
-           return Ok(_gestioneQueries.GetAll());
+           return Ok(_gestioneQueries.GetAll().Result);
         }
 
         
         [HttpGet("{id}-{data}")]
-        public ActionResult<DTOGestione> GetById(string id,string date)
+        public ActionResult<DTOGestione> GetById(string id,string data)
         {
-            var resp = _gestioneQueries.GetGestioneById(id,date);
+            var resp = _gestioneQueries.GetGestioneById(id,data).Result;
             if(resp != null)
             {
                 return Ok(resp);
@@ -56,10 +59,10 @@ namespace AziendaGestionale.Controllers
         }
 
         
-        [HttpPut("{id}")]
-        public ActionResult Put(string id,string date, DTOGestione gestione)
+        [HttpPut("{id}-{data}")]
+        public ActionResult Put(string id,string data, DTOGestione gestione)
         {
-            bool resp = _gestioneRepository.UpdateGestioneById(id,date,gestione);
+            bool resp = _gestioneRepository.UpdateGestioneById(id,data,gestione);
             if(resp)
             {
                 return Ok("Aggiornamento eseguito con successo");
@@ -71,10 +74,10 @@ namespace AziendaGestionale.Controllers
         }
 
         
-        [HttpDelete("{id}")]
-        public ActionResult Delete(string id, string date)
+        [HttpDelete("{id}-{data}")]
+        public ActionResult Delete(string id, string data)
         {
-            bool resp = _gestioneRepository.DeleteGestioneById(id, date);
+            bool resp = _gestioneRepository.DeleteGestioneById(id, data);
             if (resp)
             {
                 return Ok("Cancellazione eseguita con successo");
@@ -85,7 +88,8 @@ namespace AziendaGestionale.Controllers
             }
         }
 
-        [HttpPut("/CategoriaInMinuscolo")]
+        [HttpPut]
+        [Route("/CategoriaInMinuscolo")]
         public ActionResult CategoriaToLowerCase()
         {
             bool resp = _gestioneRepository.CategoriaToLowerCase();
@@ -102,7 +106,7 @@ namespace AziendaGestionale.Controllers
         [HttpGet("/SettoreInDataFattura")]
         public ActionResult RoleInInvoiceDate()
         {
-            var resp = _gestioneQueries.RoleInInvoiceDate();
+            var resp = _gestioneQueries.RoleInInvoiceDate().Result;
             return Ok(resp);
         }
     }

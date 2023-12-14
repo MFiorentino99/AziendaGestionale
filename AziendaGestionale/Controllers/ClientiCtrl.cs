@@ -8,8 +8,8 @@ using Oracle.ManagedDataAccess.Client;
 
 namespace AziendaGestionale.Controllers
 {
-    [Route("api/ClientiCtrl")]
-    [ApiController]
+    //[Route("api/ClientiCtrl")]
+    //[ApiController]
     public class ClientiCtrl : ControllerBase
     {
         private readonly Context _context;
@@ -22,7 +22,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // GET: api/ClientiCtrl
-        [HttpGet]
+        //[HttpGet]
         public async Task<ActionResult<IEnumerable<ClienteDTO>>> GetCliente()
         {
             string query = $"SELECT RTRIM(ID_CLIENTE) ID_CLIENTE, RTRIM(NOME) NOME, RTRIM(COGNOME) COGNOME, RTRIM(CITTA) CITTA" +
@@ -43,7 +43,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // GET: api/ClientiCtrl/5
-        [HttpGet("{id}")]
+       // [HttpGet("{id}")]
         public async Task<ActionResult<ClienteDTO>> GetCliente(string id)
         {
             string query = $"SELECT RTRIM(ID_CLIENTE) ID_CLIENTE, RTRIM(NOME) NOME, RTRIM(COGNOME) COGNOME, RTRIM(CITTA) CITTA" +
@@ -80,7 +80,7 @@ namespace AziendaGestionale.Controllers
 
         // PUT: api/ClientiCtrl/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+       // [HttpPut("{id}")]
         public async Task<IActionResult> PutCliente(string id, ClienteDTO clienteDTO)
         {
             string query = $"UPDATE {_tableName} SET " +
@@ -147,7 +147,7 @@ namespace AziendaGestionale.Controllers
 
         // POST: api/ClientiCtrl
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        //[HttpPost]
         public async Task<ActionResult<ClienteDTO>> PostCliente(ClienteDTO clienteDTO)
         {
             string query = $"INSERT INTO {_tableName} "+
@@ -207,7 +207,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // DELETE: api/ClientiCtrl/5
-        [HttpDelete("{id}")]
+        //[HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCliente(string id)
         {
             string query = $"DELETE FROM {_tableName} WHERE RTRIM(ID_CLIENTE) =:ID_CLIENTE";

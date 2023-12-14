@@ -13,8 +13,8 @@ using Dapper;
 
 namespace AziendaGestionale.Controllers
 {
-    [Route("api/DettagliCtrl")]
-    [ApiController]
+    //[Route("api/DettagliCtrl")]
+    //[ApiController]
     public class DettagliCtrl : ControllerBase
     {
         private readonly Context _context;
@@ -26,7 +26,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // GET: api/DettagliCtrl
-        [HttpGet]
+       // [HttpGet]
         public async Task<ActionResult<IEnumerable<DettaglioDTO>>> GetDettaglio()
         {
             string query = $"SELECT RTRIM(ID_FATTURA) ID_FATTURA, RTRIM(PRODOTTO) PRODOTTO, QUANTITY AS QUANTITA, COSTO" +
@@ -46,7 +46,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // GET: api/DettagliCtrl/5
-        [HttpGet("{id}-{prodotto}")]
+        //[HttpGet("{id}-{prodotto}")]
         public async Task<ActionResult<DettaglioDTO>> GetDettaglio(string id, string prodotto)
         {
             string query = $" SELECT RTRIM(ID_FATTURA) ID_FATTURA, RTRIM(PRODOTTO) PRODOTTO, QUANTITY AS QUANTITA, COSTO FROM {_tableName} " +
@@ -87,7 +87,7 @@ namespace AziendaGestionale.Controllers
 
         // PUT: api/DettagliCtrl/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}/{prodotto}")]
+        //[HttpPut("{id}/{prodotto}")]
         public async Task<IActionResult> PutDettaglio(string id, string prodotto, DettaglioDTO dettaglioDTO)
         {
             string query = $"UPDATE {_tableName} SET " +
@@ -146,7 +146,7 @@ namespace AziendaGestionale.Controllers
 
         // POST: api/DettagliCtrl
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        //[HttpPost]
         public async Task<ActionResult<DettaglioDTO>> PostDettaglio(DettaglioDTO dettaglioDTO)
         {
             string query = $"INSERT INTO {_tableName} " +
@@ -207,7 +207,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // DELETE: api/DettagliCtrl/5
-        [HttpDelete("{id}-{prodotto}")]
+       // [HttpDelete("{id}-{prodotto}")]
         public async Task<IActionResult> DeleteDettaglio(string id, string prodotto)
         {
             string query = $"DELETE FROM {_tableName} WHERE RTRIM(ID_FATTURA)=:ID_FATTURA AND RTRIM(PRODOTTO)=LOWER(:PRODOTTO)";

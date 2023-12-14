@@ -15,8 +15,8 @@ using System.Drawing;
 
 namespace AziendaGestionale.Controllers
 {
-    [Route("api/DipendentiCtrl")]
-    [ApiController]
+    //[Route("api/DipendentiCtrl")]
+    //[ApiController]
     public class DipendentiCtrl : ControllerBase
     {
         private readonly Context _context;
@@ -28,7 +28,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // GET: api/DipendentiCtrl
-        [HttpGet]
+        //[HttpGet]
         public async Task<ActionResult<IEnumerable<DipendenteDTO>>> GetDipendente()
         {
             using (var connection = new OracleConnection(_connectionString))
@@ -51,7 +51,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // GET: api/DipendentiCtrl/5
-        [HttpGet("{id}")]
+        //[HttpGet("{id}")]
         public async Task<ActionResult<DipendenteDTO>> GetDipendente(string id)
         {/*
           if (_context.Dipendente == null)
@@ -89,7 +89,7 @@ namespace AziendaGestionale.Controllers
 
         // PUT: api/DipendentiCtrl/5
   
-        [HttpPut("{id}")]
+        //[HttpPut("{id}")]
         public async Task<IActionResult> PutDipendente(string id, DipendenteDTO dipendenteDTO)
         {
             string query = 
@@ -153,7 +153,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // POST: api/DipendentiCtrl
-        [HttpPost]
+        //[HttpPost]
         public async Task<ActionResult<Dipendente>> PostDipendente(DipendenteDTO dipendenteDTO)
         {
             string query = $"INSERT INTO {_tableName} " +
@@ -215,7 +215,7 @@ namespace AziendaGestionale.Controllers
         }
 
         // DELETE: api/DipendentiCtrl/5
-        [HttpDelete("{id}")]
+        //[HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDipendente(string id)
         {
             string query = $"DELETE FROM {_tableName} WHERE RTRIM(ID_DIPENDENTE) =:ID_DIPENDENTE";
@@ -248,8 +248,8 @@ namespace AziendaGestionale.Controllers
             */
         }
 
-        [HttpGet]
-        [Route("/NoSettore/{settoreId}")]
+        //[HttpGet]
+        //[Route("/NoSettore/{settoreId}")]
         public async Task<IActionResult> NoVendor(string settoreId)
         {
             string query = $"SELECT RTRIM(D.NOME) NOME, D.SETTORE FROM {_tableName} D " +
@@ -262,8 +262,8 @@ namespace AziendaGestionale.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("/MigliorVenditore/{min}-{max}")]
+        //[HttpGet]
+        //[Route("/MigliorVenditore/{min}-{max}")]
         public  async Task<ActionResult> BestVendor(int min,int max)
         {
             string query = 
@@ -291,8 +291,8 @@ namespace AziendaGestionale.Controllers
         }
 
 
-        [HttpGet]
-        [Route("/Concat_NomeCognome")]
+        //[HttpGet]
+        //[Route("/Concat_NomeCognome")]
         public async Task<ActionResult> Concat()
         {
             string query = $"SELECT RTRIM(NOME) || ' ' || RTRIM(COGNOME) AS CREDENZIALI FROM {_tableName}";
@@ -303,8 +303,8 @@ namespace AziendaGestionale.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("/CognomeLungo")]
+        //[HttpGet]
+        //[Route("/CognomeLungo")]
         public async Task<ActionResult<DipendenteDTO>> cognomeLungo()
         {
             string query = $"SELECT RTRIM(ID_DIPENDENTE) ID_DIPENDENTE, RTRIM(Nome) NOME, RTRIM(Cognome) COGNOME,LENGTH(TRIM(COGNOME)) AS COGNOME_LENGTH, RTRIM(SETTORE) SETTORE, RTRIM(CATEGORIA) CATEGORIA, STIPENDIO " +
@@ -323,7 +323,7 @@ namespace AziendaGestionale.Controllers
             }
         }
 
-        [HttpGet("/InGestione")]
+        //[HttpGet("/InGestione")]
         public async Task<ActionResult<DipendenteDTO>> CheckInGestione()
         {
             string query =
