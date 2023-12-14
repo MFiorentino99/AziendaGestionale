@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Oracle.ManagedDataAccess.Client;
 
-namespace AziendaGestionale.Controllers
+namespace AziendaGestionale.Controllers.Ctrl
 {
     //[Route("api/ClientiCtrl")]
     //[ApiController]
@@ -33,24 +33,24 @@ namespace AziendaGestionale.Controllers
                 return Ok(resp);
             }
 
-          /*
-           * if (_context.Cliente == null)
-          {
-              return NotFound();
-          }
-            return await _context.Cliente.Select(c => ItemToDTO(c)).ToListAsync();
-          */
+            /*
+             * if (_context.Cliente == null)
+            {
+                return NotFound();
+            }
+              return await _context.Cliente.Select(c => ItemToDTO(c)).ToListAsync();
+            */
         }
 
         // GET: api/ClientiCtrl/5
-       // [HttpGet("{id}")]
+        // [HttpGet("{id}")]
         public async Task<ActionResult<ClienteDTO>> GetCliente(string id)
         {
             string query = $"SELECT RTRIM(ID_CLIENTE) ID_CLIENTE, RTRIM(NOME) NOME, RTRIM(COGNOME) COGNOME, RTRIM(CITTA) CITTA" +
                 $" FROM {_tableName} WHERE RTRIM(ID_CLIENTE) =:ID_CLIENTE";
             using (var conn = new OracleConnection(_connectionString))
             {
-                if(ClienteExists(id))
+                if (ClienteExists(id))
                 {
                     var resp = await conn.QuerySingleAsync<ClienteDTO>(query, new { ID_CLIENTE = id });
                     return Ok(resp);
@@ -80,14 +80,14 @@ namespace AziendaGestionale.Controllers
 
         // PUT: api/ClientiCtrl/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-       // [HttpPut("{id}")]
+        // [HttpPut("{id}")]
         public async Task<IActionResult> PutCliente(string id, ClienteDTO clienteDTO)
         {
             string query = $"UPDATE {_tableName} SET " +
                 " NOME =:NOME, COGNOME =:COGNOME, CITTA =:CITTA " +
                 "WHERE RTRIM(ID_CLIENTE)=:ID_CLIENTE";
-                
-            using(var  conn = new OracleConnection(_connectionString))
+
+            using (var conn = new OracleConnection(_connectionString))
             {
                 if (ClienteExists(id))
                 {
@@ -150,7 +150,7 @@ namespace AziendaGestionale.Controllers
         //[HttpPost]
         public async Task<ActionResult<ClienteDTO>> PostCliente(ClienteDTO clienteDTO)
         {
-            string query = $"INSERT INTO {_tableName} "+
+            string query = $"INSERT INTO {_tableName} " +
                 $"(ID_CLIENTE, NOME, COGNOME, CITTA) " +
                 $"VALUES (:ID_CLIENTE, :NOME, :COGNOME, :CITTA)"; ;
             using (var conn = new OracleConnection(_connectionString))
@@ -215,10 +215,11 @@ namespace AziendaGestionale.Controllers
             {
                 if (ClienteExists(id))
                 {
-                    await conn.ExecuteAsync(query, new {ID_CLIENTE =id});
+                    await conn.ExecuteAsync(query, new { ID_CLIENTE = id });
                     return Ok("Cancellazione eseguita con successo");
                 }
-                else {
+                else
+                {
                     return BadRequest();
                 }
             }
@@ -243,15 +244,16 @@ namespace AziendaGestionale.Controllers
 
         private bool ClienteExists(string id)
         {
-           // return (_context.Cliente?.Any(e => e.Id_cliente == id)).GetValueOrDefault();
-           string find = $"SELECT * FROM {_tableName} WHERE RTRIM(ID_CLIENTE) =:ID_CLIENTE";
+            // return (_context.Cliente?.Any(e => e.Id_cliente == id)).GetValueOrDefault();
+            string find = $"SELECT * FROM {_tableName} WHERE RTRIM(ID_CLIENTE) =:ID_CLIENTE";
             using (var conn = new OracleConnection(_connectionString))
             {
-                var resp = conn.Query(find, new {ID_CLIENTE = id});
+                var resp = conn.Query(find, new { ID_CLIENTE = id });
                 if (resp.Count() != 0)
                 {
                     return true;
-                }else
+                }
+                else
                 {
                     return false;
                 }
