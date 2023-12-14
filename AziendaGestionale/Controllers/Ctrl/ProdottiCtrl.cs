@@ -11,7 +11,7 @@ using AziendaGestionale.Models.DTO;
 using Oracle.ManagedDataAccess.Client;
 using Dapper;
 
-namespace AziendaGestionale.Controllers
+namespace AziendaGestionale.Controllers.Ctrl
 {
     /*
     [Route("api/ProdottiCtrl")]
@@ -33,9 +33,9 @@ namespace AziendaGestionale.Controllers
         {
             string query = $"SELECT RTRIM(NOME) NOME, RTRIM(CATEGORIA) CATEGORIA, COSTO_PRODUZIONE" +
                 $" FROM {_tableName}";
-            using(var conn = new OracleConnection(_connectionString))
+            using (var conn = new OracleConnection(_connectionString))
             {
-                var resp =await conn.QueryAsync<ProdottoDTO>(query);
+                var resp = await conn.QueryAsync<ProdottoDTO>(query);
                 return Ok(resp);
             }
             /*
@@ -47,7 +47,7 @@ namespace AziendaGestionale.Controllers
             */
         }
 
-       
+
 
         // GET: api/ProdottiCtrl/5
         //[HttpGet("{nome}")]
@@ -57,7 +57,7 @@ namespace AziendaGestionale.Controllers
                 $" FROM {_tableName} WHERE RTRIM(NOME)=LOWER(:NOME)";
             using (var conn = new OracleConnection(_connectionString))
             {
-                if(ProdottoExists(nome))
+                if (ProdottoExists(nome))
                 {
                     var resp = await conn.QuerySingleAsync<ProdottoDTO>(find, new { NOME = nome });
                     return Ok(resp);
@@ -91,11 +91,12 @@ namespace AziendaGestionale.Controllers
         {
             string query = $"UPDATE {_tableName} SET CATEGORIA=:CATEGORIA, COSTO_PRODUZIONE=:COSTO " +
                 $"WHERE RTRIM(NOME)=LOWER(:NOME)";
-            using(var conn = new OracleConnection(_connectionString))
+            using (var conn = new OracleConnection(_connectionString))
             {
                 if (ProdottoExists(nome))
                 {
-                    await conn.ExecuteAsync(query, new { 
+                    await conn.ExecuteAsync(query, new
+                    {
                         NOME = nome,
                         CATEGORIA = prodottoDTO.Categoria,
                         COSTO = prodottoDTO.Costo_produzione
@@ -152,7 +153,7 @@ namespace AziendaGestionale.Controllers
             string query = $"INSERT INTO {_tableName} " +
                 $"(NOME,CATEGORIA,COSTO_PRODUZIONE) " +
                 $"VALUES (LOWER(:NOME), :CATEGORIA, :COSTO)";
-            using(var conn = new OracleConnection(_connectionString))
+            using (var conn = new OracleConnection(_connectionString))
             {
                 if (!ProdottoExists(prodottoDTO.Nome))
                 {
@@ -242,10 +243,10 @@ namespace AziendaGestionale.Controllers
             //return (_context.Prodotto?.Any(e => e.Nome == nome)).GetValueOrDefault();
 
             string find = $"SELECT * FROM {_tableName} WHERE RTRIM(NOME)=LOWER(:NOME)";
-            using(var conn = new OracleConnection(_connectionString))
-            { 
-                var resp = conn.Query<ProdottoDTO>(find, new { NOME = id});
-                if(resp.Count() != 0)
+            using (var conn = new OracleConnection(_connectionString))
+            {
+                var resp = conn.Query<ProdottoDTO>(find, new { NOME = id });
+                if (resp.Count() != 0)
                 {
                     return true;
                 }

@@ -22,6 +22,8 @@ builder.Services.AddScoped<IGestioneQuery, GestioneQueries>();
 builder.Services.AddScoped<IGestioneRepository, GestioneRepository>();
 builder.Services.AddScoped<IFattureQueries, FattureQueries>();
 builder.Services.AddScoped<IFattureRepository, FattureRepository>();
+builder.Services.AddScoped<IDipendentiQueries, DipendentiQueries>();
+builder.Services.AddScoped<IDipendentiRepository, DipendentiRepository>();
 
 var app = builder.Build();
 

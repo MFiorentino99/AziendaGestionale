@@ -12,7 +12,7 @@ using System.Globalization;
 using Oracle.ManagedDataAccess.Client;
 using Dapper;
 
-namespace AziendaGestionale.Controllers
+namespace AziendaGestionale.Controllers.Ctrl
 {
     //[Route("api/FattureCtrl")]
     //[ApiController]
@@ -37,7 +37,7 @@ namespace AziendaGestionale.Controllers
             {
                 var resp = await conn.QueryAsync<FatturaDTO>(query);
                 return Ok(resp);
-            }   
+            }
             /*
           if (_context.Fattura == null)
           {
@@ -54,9 +54,9 @@ namespace AziendaGestionale.Controllers
             string query = $"SELECT RTRIM(ID_FATTURA) ID_FATTURA, RTRIM(ID_VENDITORE) ID_VENDITORE, RTRIM(ID_CLIENTE) ID_CLIENTE, DATA_VENDITA, TOTALE" +
                 $" FROM {_tableName} WHERE RTRIM(ID_FATTURA)=:ID_FATTURA AND DATA_VENDITA = :DATA_VENDITA ";
             DateTime d = DataConverter(data);
-            using(var conn = new OracleConnection(_connectionString))
+            using (var conn = new OracleConnection(_connectionString))
             {
-             if(FatturaExists(id,d))
+                if (FatturaExists(id, d))
                 {
                     var resp = await conn.QuerySingleAsync<FatturaDTO>(query, new
                     {
@@ -64,7 +64,7 @@ namespace AziendaGestionale.Controllers
                         DATA_VENDITA = d
                     });
                     return Ok(resp);
-                }  
+                }
                 else
                 {
                     return NotFound("Fattura non trovata");
@@ -89,13 +89,13 @@ namespace AziendaGestionale.Controllers
 
         // PUT: api/FattureCtrl/5
         //[HttpPut("{id}/{data}")]
-        public async Task<IActionResult> PutFattura(string id,string data, FatturaDTO fatturaDTO)
+        public async Task<IActionResult> PutFattura(string id, string data, FatturaDTO fatturaDTO)
         {
             DateTime d = DataConverter(data);
             string query = $"UPDATE {_tableName} SET " +
                 $" ID_VENDITORE =:ID_VENDITORE, ID_CLIENTE =:ID_CLIENTE, TOTALE =:TOTALE " +
                 $" WHERE RTRIM(ID_FATTURA)=:ID_FATTURA AND DATA_VENDITA = :DATA_VENDITA";
-            using(var conn = new OracleConnection(_connectionString))
+            using (var conn = new OracleConnection(_connectionString))
             {
                 if (FatturaExists(id, d))
                 {
@@ -109,7 +109,8 @@ namespace AziendaGestionale.Controllers
                     });
                     return Ok("Aggiornamento eseguito con successo");
                 }
-                else { 
+                else
+                {
                     return NotFound("Fattura non trovata");
                 }
             }
@@ -157,13 +158,13 @@ namespace AziendaGestionale.Controllers
         //[HttpPost]
         public async Task<ActionResult<Fattura>> PostFattura(FatturaDTO fatturaDTO)
         {
-            
+
             string query = $"INSERT INTO {_tableName} " +
                 $"(ID_FATTURA, DATA_VENDITA, ID_VENDITORE, ID_CLIENTE, TOTALE) " +
                 $"VALUES (:ID_FATTURA, :DATA_VENDITA, :ID_VENDITORE, :ID_CLIENTE, :TOTALE )";
-            using(var conn = new OracleConnection(_connectionString))
+            using (var conn = new OracleConnection(_connectionString))
             {
-                if(!FatturaExists(fatturaDTO.Id_fattura,fatturaDTO.Data_vendita))
+                if (!FatturaExists(fatturaDTO.Id_fattura, fatturaDTO.Data_vendita))
                 {
                     await conn.ExecuteAsync(query, new
                     {
@@ -174,11 +175,12 @@ namespace AziendaGestionale.Controllers
                         TOTALE = fatturaDTO.Totale
                     });
                     return Ok("Inswrimento eseguito con sufìccesso");
-                }else
+                }
+                else
                 {
                     return BadRequest();
                 }
-               
+
             }
             /*
           if (_context.Fattura == null)
@@ -217,7 +219,7 @@ namespace AziendaGestionale.Controllers
 
         // DELETE: api/FattureCtrl/5
         //[HttpDelete("{id}/{data}")]
-        public async Task<IActionResult> DeleteFattura(string id,string data)
+        public async Task<IActionResult> DeleteFattura(string id, string data)
         {
             string query = $"DELETE FROM {_tableName} WHERE" +
                 $" RTRIM(ID_FATTURA)=:ID_FATTURA AND DATA_VENDITA=:DATA_VENDITA ";
@@ -271,7 +273,7 @@ namespace AziendaGestionale.Controllers
             }
         }
 
-       // [HttpGet("/IncassoAnnuale")]
+        // [HttpGet("/IncassoAnnuale")]
         public async Task<ActionResult> AnnualIncome()
         {
             string query = $"SELECT EXTRACT(YEAR FROM DATA_VENDITA) AS ANNO, SUM(TOTALE) AS TOTALE_ANNUO " +
@@ -284,7 +286,7 @@ namespace AziendaGestionale.Controllers
             }
         }
 
-      //  [HttpGet("/IncassoAnnualePerCliente")]
+        //  [HttpGet("/IncassoAnnualePerCliente")]
         public async Task<ActionResult> AnnualIncomePerClient()
         {
             string query = $"SELECT ID_CLIENTE,EXTRACT(YEAR FROM DATA_VENDITA) AS ANNO, SUM(TOTALE) AS TOTALE_ANNUO_CLIENTE " +
@@ -298,7 +300,7 @@ namespace AziendaGestionale.Controllers
             }
         }
 
-      //  [HttpGet("/DettagliIncassoAnnualePerCliente")]
+        //  [HttpGet("/DettagliIncassoAnnualePerCliente")]
         public async Task<ActionResult> AnnualIncomePerClientDetails()
         {
             string query = $"SELECT TRIM(F.ID_CLIENTE) ID_CLIENTE,TRIM(C.NOME) AS NOME,TRIM(C.COGNOME) AS COGNOME,EXTRACT(YEAR FROM F.DATA_VENDITA) AS ANNO, SUM(TOTALE) AS TOTALE_ANNUO_CLIENTE " +
@@ -318,7 +320,7 @@ namespace AziendaGestionale.Controllers
             //return (_context.Fattura?.Any(e => e.Id_fattura == id && e.Data_vendita == d)).GetValueOrDefault();
             string find = $"SELECT * FROM {_tableName} WHERE " +
                 $"RTRIM(ID_FATTURA) =:ID_FATTURA AND DATA_VENDITA =:DATA_VENDITA";
-            using (var conn  = new OracleConnection(_connectionString))
+            using (var conn = new OracleConnection(_connectionString))
             {
                 var resp = conn.Query<FatturaDTO>(find, new
                 {
@@ -328,7 +330,8 @@ namespace AziendaGestionale.Controllers
                 if (resp.Count() != 0)
                 {
                     return true;
-                }else
+                }
+                else
                 {
                     return false;
                 }
@@ -341,9 +344,9 @@ namespace AziendaGestionale.Controllers
             DateTime d = DateTime.Today;
             try
             {
-                return DateTime.ParseExact(data,"dd-MM-yyyy", CultureInfo.InvariantCulture);
+                return DateTime.ParseExact(data, "dd-MM-yyyy", CultureInfo.InvariantCulture);
             }
-            catch (FormatException e){ BadRequest(e.Message); }
+            catch (FormatException e) { BadRequest(e.Message); }
             return d;
         }
         /*

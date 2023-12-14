@@ -12,10 +12,10 @@ using System.Globalization;
 using Oracle.ManagedDataAccess.Client;
 using Dapper;
 
-namespace AziendaGestionale.Controllers
+namespace AziendaGestionale.Controllers.Ctrl
 {
-   // [Route("api/GestioneCtrl")]
-   // [ApiController]
+    // [Route("api/GestioneCtrl")]
+    // [ApiController]
     public class GestioneCtrl : ControllerBase
     {
         private readonly Context _context;
@@ -28,12 +28,12 @@ namespace AziendaGestionale.Controllers
         }
 
         // GET: api/GestioneCtrl
-       // [HttpGet]
+        // [HttpGet]
         public async Task<ActionResult<IEnumerable<GestioneDTO>>> GetGestione()
         {
             string query = $"SELECT RTRIM(ID_DIPENDENTE) ID_DIPENDENTE, DATA_ASSEGNAZIONE, RTRIM(SETTORE) SETTORE, RTRIM(CATEGORIA) CATEGORIA" +
                 $" FROM {_tableName}";
-            using(var conn = new OracleConnection(_connectionString))
+            using (var conn = new OracleConnection(_connectionString))
             {
                 var resp = await conn.QueryAsync<GestioneDTO>(query);
                 if (resp.Count() > 0)
@@ -44,7 +44,7 @@ namespace AziendaGestionale.Controllers
                 {
                     return BadRequest("Non ci sono elementi nel DB");
                 }
-                
+
             }
             /*
           if (_context.Gestione == null)
@@ -62,17 +62,18 @@ namespace AziendaGestionale.Controllers
             string query = $"SELECT RTRIM(ID_DIPENDENTE) ID_DIPENDENTE, DATA_ASSEGNAZIONE, RTRIM(SETTORE) SETTORE, RTRIM(CATEGORIA) CATEGORIA " +
                 $"FROM {_tableName} WHERE ID_DIPENDENTE=:ID_DIPENDENTE AND RTRIM(DATA_ASSEGNAZIONE)=:DATA_ASSEGNAZIONE";
             DateTime d = DateConvert(data);
-            using(var conn = new OracleConnection(_connectionString))
+            using (var conn = new OracleConnection(_connectionString))
             {
-                if(GestioneExists(id,d))
+                if (GestioneExists(id, d))
                 {
                     var resp = await conn.QuerySingleAsync<GestioneDTO>(query, new
                     {
                         ID_DIPENDENTE = id,
                         DATA_ASSEGNAZIONE = d
-                    }) ;
+                    });
                     return Ok(resp);
-                }else
+                }
+                else
                 {
                     return NotFound("Non trovato");
                 }
@@ -97,13 +98,13 @@ namespace AziendaGestionale.Controllers
 
         // PUT: api/GestioneCtrl/5
         //[HttpPut("{id}/{data}")]
-        public async Task<IActionResult> PutGestione(string id,string data, GestioneDTO gestioneDTO)
+        public async Task<IActionResult> PutGestione(string id, string data, GestioneDTO gestioneDTO)
         {
             DateTime d = DateConvert(data);
             string query = $"UPDATE {_tableName} SET " +
                 $"SETTORE=:SETTORE, CATEGORIA=:CATEGORIA " +
                 $"WHERE RTRIM(ID_DIPENDENTE)=:ID_DIPENDENTE AND DATA_ASSEGNAZIONE=:DATA_ASSEGNAZIONE";
-            using(var conn = new OracleConnection(_connectionString))
+            using (var conn = new OracleConnection(_connectionString))
             {
                 if (GestioneExists(id, d))
                 {
@@ -115,7 +116,8 @@ namespace AziendaGestionale.Controllers
                         CATEGORIA = gestioneDTO.Categoria
                     });
                     return Ok("Aggiornamento eseguito con successo");
-                }else
+                }
+                else
                 {
                     return NotFound("Elemento non trovato");
                 }
@@ -169,9 +171,9 @@ namespace AziendaGestionale.Controllers
             string query = $"INSERT INTO {_tableName} " +
                 $"(ID_DIPENDENTE, DATA_ASSEGNAZIONE, SETTORE, CATEGORIA) " +
                 $"VALUES (:ID_DIPENDENTE, :DATA_ASSEGNAZIONE, :SETTORE, :CATEGORIA)";
-            using(var conn =new OracleConnection(_connectionString))
+            using (var conn = new OracleConnection(_connectionString))
             {
-                if(!GestioneExists(gestioneDTO.Id_dipendente,gestioneDTO.Data_assegnazione)) 
+                if (!GestioneExists(gestioneDTO.Id_dipendente, gestioneDTO.Data_assegnazione))
                 {
                     await conn.ExecuteAsync(query, new
                     {
@@ -179,11 +181,12 @@ namespace AziendaGestionale.Controllers
                         DATA_ASSEGNAZIONE = gestioneDTO.Data_assegnazione,
                         SETTORE = gestioneDTO.Settore,
                         CATEGORIA = gestioneDTO.Categoria
-                    }); 
-                    return Ok("Aggiunta eseguita con successo");                
-                }else { return BadRequest("Elemento già presente"); }
+                    });
+                    return Ok("Aggiunta eseguita con successo");
+                }
+                else { return BadRequest("Elemento già presente"); }
             }
-            
+
 
             /*
           if (_context.Gestione == null)
@@ -222,11 +225,11 @@ namespace AziendaGestionale.Controllers
 
         // DELETE: api/GestioneCtrl/5
         //[HttpDelete("{id}/{data}")]
-        public async Task<IActionResult> DeleteGestione(string id,string data)
+        public async Task<IActionResult> DeleteGestione(string id, string data)
         {
             string query = $"DELETE FROM {_tableName} WHERE RTRIM(ID_DIPENDENTE) =:ID_DIPENDENTE AND DATA_ASSEGNAZIONE=:DATA_ASSEGNAZIONE";
             DateTime d = DateConvert(data);
-            using (var conn =new OracleConnection(_connectionString))
+            using (var conn = new OracleConnection(_connectionString))
             {
                 if (GestioneExists(id, d))
                 {
@@ -262,15 +265,15 @@ namespace AziendaGestionale.Controllers
             */
         }
 
-       // [HttpPut("/CategoriaInMinuscolo")]
+        // [HttpPut("/CategoriaInMinuscolo")]
         public async Task<ActionResult> CategoriaToLowerCase()
         {
             string query = $"UPDATE {_tableName} SET SETTORE = LOWER(TRIM(SETTORE))," +
                 $" CATEGORIA = LOWER(TRIM(CATEGORIA))";
-            using(var  conn =new OracleConnection(_connectionString))
+            using (var conn = new OracleConnection(_connectionString))
             {
                 var res = await conn.ExecuteAsync(query);
-                if(res >0)
+                if (res > 0)
                 {
                     return Ok("Aggioramento eseguito con successo");
                 }
@@ -278,10 +281,10 @@ namespace AziendaGestionale.Controllers
                 {
                     return BadRequest("Aggiornamento fallito");
                 }
-                
+
             }
         }
-       // [HttpGet("/IncaricoADataFattura")]
+        // [HttpGet("/IncaricoADataFattura")]
         public async Task<ActionResult> RoleInInvoiceDate()
         {
             string query = $"SELECT DISTINCT RTRIM(T.ID_DIPENDENTE) ID_DIPENDENTE, RTRIM(G.SETTORE) SETTORE," +
@@ -296,7 +299,7 @@ namespace AziendaGestionale.Controllers
                 $" JOIN {_tableName} G ON RTRIM(G.ID_DIPENDENTE)=RTRIM(T.ID_DIPENDENTE) " +
                 $"WHERE T.DATA_RECENTE = G.DATA_ASSEGNAZIONE " +
                 $"ORDER BY ID_DIPENDENTE ASC, DATA_VENDITA DESC";
-            using (var conn =new OracleConnection(_connectionString))
+            using (var conn = new OracleConnection(_connectionString))
             {
                 var res = await conn.QueryAsync(query);
                 return Ok(res);
@@ -306,9 +309,9 @@ namespace AziendaGestionale.Controllers
         {
             //return (_context.Gestione?.Any(e => e.Id_dipendente == id && e.Data_assegnazione == date)).GetValueOrDefault();
             string query = $"SELECT * FROM {_tableName} WHERE RTRIM(ID_DIPENDENTE)=:ID_DIPENDENTE AND DATA_ASSEGNAZIONE=:DATA_ASSEGNAZIONE";
-            using(var conn = new OracleConnection(_connectionString))
+            using (var conn = new OracleConnection(_connectionString))
             {
-                var resp = conn.Query<GestioneDTO>(query,new
+                var resp = conn.Query<GestioneDTO>(query, new
                 {
                     ID_DIPENDENTE = id,
                     DATA_ASSEGNAZIONE = data
@@ -329,14 +332,15 @@ namespace AziendaGestionale.Controllers
             DateTime today = DateTime.Today;
             try
             {
-                return  DateTime.ParseExact(d, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                return DateTime.ParseExact(d, "dd-MM-yyyy", CultureInfo.InvariantCulture);
             }
-            catch (FormatException e){
+            catch (FormatException e)
+            {
                 BadRequest(e.Message);
                 return DateTime.Parse("00/00/0000", CultureInfo.InvariantCulture);
             }
 
-            
+
         }
         /*
         public static GestioneDTO ItemToDTO(Gestione g) 
