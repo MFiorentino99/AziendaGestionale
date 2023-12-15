@@ -110,23 +110,25 @@ namespace Test.Repositories
             }
         }
 
-        public bool UpdateTot()
+        public async Task<bool> UpdateTot()
         {
             string query = $@"UPDATE {_tableName} SET {_tableName}.TOTALE = (
-                SELECT SUM(D.COSTO * D.QAUNTITY) 
-                FROM A_DETTAGLIO D 
-                WHERE {_tableName}.ID_FATTURA = D.ID_FATTURA)";
+                SELECT SUM(A_DETTAGLIO.COSTO * A_DETTAGLIO.QUANTITY) 
+                FROM A_DETTAGLIO  
+                WHERE {_tableName}.ID_FATTURA = A_DETTAGLIO.ID_FATTURA)";
             using (var connection = new OracleConnection(_connectionString))
             {
-                var resp = connection.Execute(query);
+                var resp = await connection.ExecuteAsync(query);
+                return resp > 0;
+                /*
                 if(resp > 0)
                 {
                     return true;
                 }
                 else
                 {
-                    return false;
-                }
+                    return false ;
+                }*/
             }
         }
     }

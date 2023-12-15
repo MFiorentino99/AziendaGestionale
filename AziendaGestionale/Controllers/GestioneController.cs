@@ -9,7 +9,7 @@ using Test.InterfacesRepository;
 
 namespace AziendaGestionale.Controllers
 {
-    [Route("api/Gestione")]
+    [Route("Gestione")]
     [ApiController]
     public class GestioneController : ControllerBase
     {
@@ -28,7 +28,7 @@ namespace AziendaGestionale.Controllers
         }
 
         
-        [HttpGet("{id}-{data}")]
+        [HttpGet("{id}/{data}")]
         public ActionResult<DTOGestione> GetById(string id,string data)
         {
             var resp = _gestioneQueries.GetGestioneById(id,data).Result;
@@ -59,7 +59,7 @@ namespace AziendaGestionale.Controllers
         }
 
         
-        [HttpPut("{id}-{data}")]
+        [HttpPut("{id}/{data}")]
         public ActionResult Put(string id,string data, DTOGestione gestione)
         {
             bool resp = _gestioneRepository.UpdateGestioneById(id,data,gestione);
@@ -74,7 +74,7 @@ namespace AziendaGestionale.Controllers
         }
 
         
-        [HttpDelete("{id}-{data}")]
+        [HttpDelete("{id}/{data}")]
         public ActionResult Delete(string id, string data)
         {
             bool resp = _gestioneRepository.DeleteGestioneById(id, data);

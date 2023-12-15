@@ -6,7 +6,7 @@ using Test.Models;
 
 namespace AziendaGestionale.Controllers
 {
-    [Route("api/Dipendenti")]
+    [Route("Dipendenti")]
     [ApiController]
     public class DipendentiConntroller : ControllerBase
     {
@@ -24,7 +24,8 @@ namespace AziendaGestionale.Controllers
         {
             return Ok(_dipendentiQueries.GetAll().Result);
         }
-        [HttpGet]
+
+        [HttpGet("{id}")]
         public ActionResult<DTODipendente> GetDipendenteById(string id)
         {
             var resp = _dipendentiQueries.GetById(id).Result;

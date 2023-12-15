@@ -28,6 +28,7 @@ builder.Services.AddScoped<IDettagliQueries, DettagliQueries>();
 builder.Services.AddScoped<IDettagliRepository, DettagliRepository>();
 builder.Services.AddScoped<IClientiQueries, ClientiQueries>();
 builder.Services.AddScoped<IClientiRepository, ClientiRepository>();
+builder.Services.AddScoped<ICliente_FattureQueries, Cliente_FattureQueries>();
 
 var app = builder.Build();
 

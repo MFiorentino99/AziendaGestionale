@@ -104,7 +104,7 @@ namespace Test.Repositories
             }
             catch (FormatException e)
             {
-                return DateTime.Parse("00/00/0000", CultureInfo.InvariantCulture);
+                return DateTime.Parse("01-01-0001", CultureInfo.InvariantCulture);
             }
         }
 

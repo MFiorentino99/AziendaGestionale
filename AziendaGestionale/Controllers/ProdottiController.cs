@@ -10,7 +10,7 @@ using Test.InterfacesRepository;
 
 namespace AziendaGestionale.Controllers
 {
-    [Route("api/Prodotti")]
+    [Route("Prodotti")]
     [ApiController]
     public class ProdottiController : ControllerBase
     {

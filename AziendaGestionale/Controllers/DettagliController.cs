@@ -6,7 +6,7 @@ using Test.Models;
 
 namespace AziendaGestionale.Controllers
 {
-    [Route("api/Dettagli")]
+    [Route("Dettagli")]
     [ApiController]
     public class DettagliController : ControllerBase
     {

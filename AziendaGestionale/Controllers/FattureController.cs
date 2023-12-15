@@ -7,7 +7,7 @@ using Test.Models;
 
 namespace AziendaGestionale.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("Fatture")]
     [ApiController]
     public class FattureController : ControllerBase
     {
@@ -25,7 +25,7 @@ namespace AziendaGestionale.Controllers
             return Ok(_fattureQueries.GetAll().Result);
         }
 
-        [HttpGet("{id}-{data}")]
+        [HttpGet("{id}/{data}")]
         public ActionResult<DTOFattura> GetFatturaById(string id, string data)
         {
             var resp = _fattureQueries.GetById(id, data).Result;
@@ -54,7 +54,7 @@ namespace AziendaGestionale.Controllers
             }
         }
 
-        [HttpPut("{id}-{data}")]
+        [HttpPut("{id}/{data}")]
         public ActionResult UpdateFatturaById(string id, string data, DTOFattura fattura)
         {
             bool resp = _fattureRepository.UpdateFatturaByID(id, data,fattura);
@@ -67,7 +67,7 @@ namespace AziendaGestionale.Controllers
             }
         }
 
-        [HttpDelete("{id}-{data}")]
+        [HttpDelete("{id}/{data}")]
         public ActionResult DeleteFatturaById(string id,string data)
         {
             bool resp = _fattureRepository.DeleteFatturaByID(id, data);
@@ -83,9 +83,10 @@ namespace AziendaGestionale.Controllers
 
         [HttpPut]
         [Route("/AggiornaTot")]
-        public ActionResult UpdateTot()
+        public async Task<ActionResult> UpdateTot()
         {
-            bool resp = _fattureRepository.UpdateTot();
+            var resp = await _fattureRepository.UpdateTot();
+           
             if (resp)
             {
                 return Ok("Aggiornamento eseguito con successo");
@@ -94,6 +95,7 @@ namespace AziendaGestionale.Controllers
             {
                 return BadRequest("Aggioirnamento fallito");
             }
+           
         }
 
         [HttpGet]

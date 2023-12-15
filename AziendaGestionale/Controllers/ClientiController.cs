@@ -6,7 +6,7 @@ using Test.Abstractions;
 
 namespace AziendaGestionale.Controllers
 {
-    [Route("api/Clienti")]
+    [Route("Clienti")]
     [ApiController]
     public class ClientiController : ControllerBase
     {
