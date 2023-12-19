@@ -47,7 +47,7 @@ namespace Test.Queries
                     }, 
                     splitOn:"ID_FATTURA"                   
                     );
-                return res.Distinct();
+                return res.Distinct().ToList();
 
             }
         }

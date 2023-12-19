@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Dapper" Version="2.1.24" />
+    <PackageReference Include="FileHelpers" Version="3.5.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.25" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.23" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.23" />
@@ -26,6 +28,7 @@
     <ProjectReference Include="..\Test.Models\Test.Models.csproj" />
     <ProjectReference Include="..\Test.Queries\Test.Queries.csproj" />
     <ProjectReference Include="..\Test.Repositories\Test.Repositories.csproj" />
+	<ProjectReference Include="..\ApplicationLayer\ApplicationLayer.csproj" />
   </ItemGroup>
 
 </Project>

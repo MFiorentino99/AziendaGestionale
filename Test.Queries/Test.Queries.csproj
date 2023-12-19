@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Dapper" Version="2.1.24" />
+    <PackageReference Include="FileHelpers" Version="3.5.2" />
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="3.21.120" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
   </ItemGroup>

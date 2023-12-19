@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FileHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ using Test.Models;
 
 namespace Test.Models
 {
+    [DelimitedRecord("|")]
     public class DTOCliente_Fatture:DTOCliente
     {
         public List<DTOFattura> FatturaList { get; set; } 

@@ -5,6 +5,8 @@ using Test.Repositories;
 using Oracle.ManagedDataAccess.Client;
 using Test.Abstractions;
 using Test.InterfacesRepository;
+using ApplicationLayer;
+using System.Text;
 
 namespace AziendaGestionale.Controllers
 {
@@ -19,9 +21,16 @@ namespace AziendaGestionale.Controllers
         }
 
         [HttpGet]
-        public ActionResult Get()
+        public async Task<ActionResult> Get()
         {
-            return Ok(_cliente_FattureQueries.PrintListInvoicesPerClient());    
+            var str = new StringBuilder();
+            var queryResp = await  _cliente_FattureQueries.PrintListInvoicesPerClient();
+            foreach (var item in queryResp)
+            {
+                str.Append(FileHelperConversion.GetStringFromDTO(item));
+            }
+
+            return Ok(str.ToString());    
         }
     }
 }
