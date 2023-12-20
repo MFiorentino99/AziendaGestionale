@@ -17,6 +17,12 @@ namespace ApplicationLayer
         public static string GetStringFromDTO(DTOCliente_Fatture dto)
         {
             var records = new List<object>();
+            var mapperCliente = MapperInitializer.InitializeMapperCliente();
+            var mapperFattura = MapperInitializer.InitializeMapperFatture();
+
+            FHCliente fhCliente = mapperCliente.Map<FHCliente>(dto);
+            records.Add(fhCliente);
+            /*
             records.Add(new FHCliente(new DTOCliente()
             {
                 Id_cliente = dto.Id_cliente,
@@ -24,10 +30,12 @@ namespace ApplicationLayer
                 Cognome = dto.Cognome,
                 Nome = dto.Nome
             }));
-
+            */
             foreach(var fattura in  dto.FatturaList)
             {
-                records.Add(new FHFattura(fattura));
+                FHFattura fHFattura = mapperFattura.Map<FHFattura>(fattura);
+                records.Add(fHFattura);
+               // records.Add(new FHFattura(fattura));
             }
 
             var s = Engine.WriteString(records) + "\n";

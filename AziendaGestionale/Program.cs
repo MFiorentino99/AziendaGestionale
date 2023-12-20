@@ -6,6 +6,7 @@ using Test.InterfacesRepository;
 using Test.Models;
 using Test.Queries;
 using Test.Repositories;
+using AutoMapper;
 
 
 
