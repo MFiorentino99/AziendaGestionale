@@ -14,15 +14,7 @@ namespace Test.Models.FileHelpers
         public string Nome { get; set; }
         public string Cognome { get; set; }
         public string? Citta { get; set; }
-        /*
-        public FHCliente(DTOCliente cliente) 
-        {
-            Id_cliente = cliente.Id_cliente;
-            Nome = cliente.Nome;
-            Cognome = cliente.Cognome;
-            Citta = cliente.Citta;
-        }
-        */
+
         public FHCliente() { }
     }
 }

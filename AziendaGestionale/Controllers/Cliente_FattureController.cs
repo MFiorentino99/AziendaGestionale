@@ -14,10 +14,12 @@ namespace AziendaGestionale.Controllers
     [ApiController]
     public class Cliente_FattureController : ControllerBase
     {
+        private readonly IFileHeplerConversion _fhConversion;
         private readonly ICliente_FattureQueries _cliente_FattureQueries;
-        public Cliente_FattureController(ICliente_FattureQueries cliente_FattureQueries)
+        public Cliente_FattureController(ICliente_FattureQueries cliente_FattureQueries, IFileHeplerConversion fhConversion)
         {
             _cliente_FattureQueries = cliente_FattureQueries;
+            _fhConversion = fhConversion;
         }
 
         [HttpGet]
@@ -27,7 +29,7 @@ namespace AziendaGestionale.Controllers
             var queryResp = await  _cliente_FattureQueries.PrintListInvoicesPerClient();
             foreach (var item in queryResp)
             {
-                str.Append(FileHelperConversion.GetStringFromDTO(item));
+                str.Append(_fhConversion.GetStringFromDTO(item));
             }
 
             return Ok(str.ToString());    

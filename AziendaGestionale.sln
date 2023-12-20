@@ -22,7 +22,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Models", "Test.Models\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.InterfacesRepository", "Test.InterfacesRepository\Test.InterfacesRepository.csproj", "{385F9B90-50A1-4AE6-86E0-58786B79B377}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationLayer", "ApplicationLayer\ApplicationLayer.csproj", "{D0F6C357-28F3-4FC8-B529-51800F124290}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationLayer", "ApplicationLayer\ApplicationLayer.csproj", "{D0F6C357-28F3-4FC8-B529-51800F124290}"
+	ProjectSection(ProjectDependencies) = postProject
+		{00AA59A7-F4E1-4D6C-BC15-AA24048C9263} = {00AA59A7-F4E1-4D6C-BC15-AA24048C9263}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -6,6 +6,7 @@ using Test.InterfacesRepository;
 using Test.Models;
 using Test.Queries;
 using Test.Repositories;
+using ApplicationLayer;
 using AutoMapper;
 
 
@@ -30,6 +31,8 @@ builder.Services.AddScoped<IDettagliRepository, DettagliRepository>();
 builder.Services.AddScoped<IClientiQueries, ClientiQueries>();
 builder.Services.AddScoped<IClientiRepository, ClientiRepository>();
 builder.Services.AddScoped<ICliente_FattureQueries, Cliente_FattureQueries>();
+builder.Services.AddScoped<IFileHeplerConversion, FileHelperConversion>();
+
 
 var app = builder.Build();
 

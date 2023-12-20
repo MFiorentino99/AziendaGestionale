@@ -1,20 +1,16 @@
 ﻿using FileHelpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Test.Models;
 using Test.Models.FileHelpers;
+using Test.Abstractions;
 
 namespace ApplicationLayer
 {
-    public class FileHelperConversion
+    public class FileHelperConversion : IFileHeplerConversion
     {
         private static MultiRecordEngine Engine => new MultiRecordEngine(
             typeof(FHCliente),typeof(FHFattura));
 
-        public static string GetStringFromDTO(DTOCliente_Fatture dto)
+        public string GetStringFromDTO(DTOCliente_Fatture dto)
         {
             var records = new List<object>();
             var mapperCliente = MapperInitializer.InitializeMapperCliente();

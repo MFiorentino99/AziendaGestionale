@@ -17,17 +17,6 @@ namespace Test.Models.FileHelpers
         public DateTime Data_vendita { get; set; }
         public float? Totale { get; set; }
 
-        /*
-        public FHFattura(DTOFattura fattua) 
-        { 
-            Id_fattura = fattua.Id_fattura;
-            Id_cliente = fattua.Id_cliente;
-            Id_venditore = fattua.Id_venditore;
-            Data_vendita = fattua.Data_vendita;
-            Totale = fattua.Totale;
-        }
-        */
-
         public FHFattura() { }
     }
 }
