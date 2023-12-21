@@ -23,11 +23,12 @@ namespace Test.Queries
         public async Task<IEnumerable<DTOCliente_Fatture>> PrintListInvoicesPerClient()
         {
             var clienteDictionary = new Dictionary<string, DTOCliente_Fatture>();
-            string query = $@"SELECT TRIM(C.NOME) NOME, TRIM(C.COGNOME) COGNOME, TRIM(C.CITTA) CITTA, TRIM(C.ID_CLIENTE) ID_CLIENTE,
-                            TRIM(F.ID_FATTURA) ID_FATTURA, TRIM(ID_VENDITORE) ID_VENDITORE, DATA_VENDITA,TOTALE
+            string query = $@"SELECT C.ID_CLIENTE, TRIM(C.NOME) NOME, TRIM(C.COGNOME) COGNOME, TRIM(C.CITTA) CITTA, 
+                            F.ID_FATTURA, F.ID_VENDITORE, DATA_VENDITA,TOTALE
                             FROM A_CLIENTE C
                             INNER JOIN A_FATTURA F ON
-                            C.ID_CLIENTE = F.ID_CLIENTE";
+                            C.ID_CLIENTE = F.ID_CLIENTE
+                            ORDER BY C.ID_CLIENTE";
             using(var conn = new OracleConnection(_connectionString))
             {
                 var res = await conn.QueryAsync<DTOCliente_Fatture, DTOFattura, DTOCliente_Fatture>(query,

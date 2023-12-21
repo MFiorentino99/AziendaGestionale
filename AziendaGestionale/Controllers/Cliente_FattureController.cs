@@ -31,7 +31,7 @@ namespace AziendaGestionale.Controllers
             {
                 str.Append(_fhConversion.GetStringFromDTO(item));
             }
-
+            _fhConversion.SaveRecordText();
             return Ok(str.ToString());    
         }
     }

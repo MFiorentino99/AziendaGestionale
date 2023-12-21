@@ -13,7 +13,9 @@ namespace Test.Models.FileHelpers
     {
         public string Id_fattura { get; set; }
         public string Id_venditore { get; set; }
-        public string Id_cliente { get; set; }
+        //public string Id_cliente { get; set; }
+
+        [FieldConverter(ConverterKind.Date, "dd-MM-yyyy")]
         public DateTime Data_vendita { get; set; }
         public float? Totale { get; set; }
 
