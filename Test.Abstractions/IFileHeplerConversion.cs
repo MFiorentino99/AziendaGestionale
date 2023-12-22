@@ -9,7 +9,7 @@ namespace Test.Abstractions
 {
     public interface IFileHeplerConversion
     {
-        public string GetStringFromDTO(DTOCliente_Fatture dto);
-        public void SaveRecordText();
+        public string GetStringFromDTO(IEnumerable<DTOCliente_Fatture> dto);
+        public void SaveRecordText(); 
     }
 }

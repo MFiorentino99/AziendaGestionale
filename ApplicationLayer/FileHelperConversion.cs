@@ -3,39 +3,46 @@ using Test.Models;
 using Test.Models.FileHelpers;
 using Test.Abstractions;
 using AutoMapper.Internal;
+using AutoMapper;
+using System.Text;
 
 namespace ApplicationLayer
 {
     public class FileHelperConversion : IFileHeplerConversion
     {
-        
+        private readonly IMapper _mapperInitializer;
         private List<object> _files;
         private static MultiRecordEngine Engine => new MultiRecordEngine(
-            typeof(FHCliente),typeof(FHFattura));
+            typeof(FHCliente),typeof(FHFattura),typeof(FHinterspace));
 
-        public FileHelperConversion()
+        public FileHelperConversion(IMapper mapper)
         {
             _files = new List<object>();
+            _mapperInitializer = mapper;
         }
-        public string GetStringFromDTO(DTOCliente_Fatture dto)
+        public string GetStringFromDTO(IEnumerable<DTOCliente_Fatture> resp)
         {
+            FHinterspace space = new FHinterspace();
             var records = new List<object>();
-            var mapperCliente = MapperInitializer.InitializeMapperCliente();
-            var mapperFattura = MapperInitializer.InitializeMapperFatture();
-
-            FHCliente fhCliente = mapperCliente.Map<FHCliente>(dto);
-            records.Add(fhCliente);
-
-            foreach(var fattura in  dto.FatturaList)
+            
+            foreach (DTOCliente_Fatture dto in resp)
             {
-                FHFattura fHFattura = mapperFattura.Map<FHFattura>(fattura);
-                records.Add(fHFattura);
+                FHCliente fhCliente = _mapperInitializer.Map<FHCliente>(dto);
+                records.Add(fhCliente);
+
+                foreach (var fattura in dto.FatturaList)
+                {
+                    FHFattura fHFattura = _mapperInitializer.Map<FHFattura>(fattura);
+                    records.Add(fHFattura);
+                }
+                records.Add(space);
             }
+           
             
-            _files.AddRange(records);
+            //_files.AddRange(records);
             
-            var s = Engine.WriteString(records) + "\n";
-            return s;
+            string str = Engine.WriteString(records);
+            return str;
         }
 
         public void SaveRecordText()

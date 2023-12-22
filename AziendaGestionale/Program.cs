@@ -7,8 +7,7 @@ using Test.Models;
 using Test.Queries;
 using Test.Repositories;
 using ApplicationLayer;
-using AutoMapper;
-
+using Microsoft.Extensions.DependencyInjection;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +31,8 @@ builder.Services.AddScoped<IClientiQueries, ClientiQueries>();
 builder.Services.AddScoped<IClientiRepository, ClientiRepository>();
 builder.Services.AddScoped<ICliente_FattureQueries, Cliente_FattureQueries>();
 builder.Services.AddScoped<IFileHeplerConversion, FileHelperConversion>();
+
+builder.Services.AddAutoMapper(typeof(MapperInitializer));
 
 
 var app = builder.Build();

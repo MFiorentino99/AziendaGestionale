@@ -25,14 +25,19 @@ namespace AziendaGestionale.Controllers
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-            var str = new StringBuilder();
+            
             var queryResp = await  _cliente_FattureQueries.PrintListInvoicesPerClient();
+            var result =_fhConversion.GetStringFromDTO(queryResp);
+            /*
             foreach (var item in queryResp)
             {
-                str.Append(_fhConversion.GetStringFromDTO(item));
+             str.Append();
+             
             }
+            
             _fhConversion.SaveRecordText();
-            return Ok(str.ToString());    
+            */
+            return Ok(result.ToString());    
         }
     }
 }
