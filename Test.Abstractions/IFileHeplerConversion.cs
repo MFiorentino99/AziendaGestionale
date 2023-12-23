@@ -9,6 +9,7 @@ namespace Test.Abstractions
 {
     public interface IFileHeplerConversion
     {
+        List<DTOFattura> GetDTOFromString(string recordsText, out List<DTOCliente> cliente);
         public string GetStringFromDTO(IEnumerable<DTOCliente_Fatture> dto);
         public void SaveRecordText(); 
     }

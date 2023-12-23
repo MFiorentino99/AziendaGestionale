@@ -49,5 +49,32 @@ namespace ApplicationLayer
         {
             Engine.WriteFile("file.txt",_files.ToArray());
         }
+
+        /* inserire la logia che legge la stringa, la mappa nei dto e li restituisce */
+        public List<DTOFattura> GetDTOFromString(string recordsText, out List<DTOCliente> clienteList)
+        {
+            string id_cliente = "";
+            clienteList = new List<DTOCliente>();
+            List<DTOFattura> listFattura = new List<DTOFattura> ();
+            var result = Engine.ReadFile(recordsText);
+
+            foreach(var item in result)
+            {
+                if (item.GetType() == typeof(FHCliente))
+                {
+                    DTOCliente cliente = _mapperInitializer.Map<DTOCliente>(item);
+                    clienteList.Add(cliente);
+                    id_cliente = cliente.Id_cliente;
+                }
+                if (item.GetType() == typeof(FHFattura))
+                {
+                    DTOFattura fattura = _mapperInitializer.Map<DTOFattura>(item);
+                    fattura.Id_cliente = id_cliente;
+                    listFattura.Add(fattura);
+
+                }
+            }
+            return listFattura;
+        }
     }
 }

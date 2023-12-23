@@ -9,8 +9,8 @@ namespace Test.InterfacesRepository
 {
     public interface IProdottiRepository
     {
-        public bool UpdateProdottoById(string id, DTOProdotto prodotto);
-        public bool CreateProdotto(DTOProdotto element);
-        public bool DeleteProdototById(string id);
+        public Task<bool> UpdateProdottoById(string id, DTOProdotto prodotto);
+        public Task<bool> CreateProdotto(DTOProdotto element);
+        public Task<bool> DeleteProdototById(string id);
     }
 }

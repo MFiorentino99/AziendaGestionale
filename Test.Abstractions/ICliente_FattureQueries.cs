@@ -10,5 +10,6 @@ namespace Test.Abstractions
     public interface ICliente_FattureQueries
     {
        public Task<IEnumerable<DTOCliente_Fatture>> PrintListInvoicesPerClient();
+       
     }
 }

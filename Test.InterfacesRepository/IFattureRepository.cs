@@ -10,9 +10,9 @@ namespace Test.InterfacesRepository
 {
     public interface IFattureRepository
     {
-        public bool CreateFattura(DTOFattura fattura);
-        public bool UpdateFatturaByID(string id, string data, DTOFattura fattura);
-        public bool DeleteFatturaByID(string id,string data);
+        public Task<bool> CreateFattura(DTOFattura fattura);
+        public Task<bool> UpdateFatturaByID(string id, string data, DTOFattura fattura);
+        public Task<bool> DeleteFatturaByID(string id,string data);
         public Task<bool> UpdateTot();
         public DateTime DateConverter(string data);
     }

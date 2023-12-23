@@ -9,8 +9,8 @@ namespace Test.InterfacesRepository
 {
     public interface IDipendentiRepository
     {
-        public bool CreateDipendente(DTODipendente dipendente);
-        public bool UpdateDipendenteById(string id,DTODipendente dipendente);
-        public bool DeleteDipendenteById(string id);
+        public Task<bool> CreateDipendente(DTODipendente dipendente);
+        public Task<bool> UpdateDipendenteById(string id,DTODipendente dipendente);
+        public Task<bool> DeleteDipendenteById(string id);
     }
 }

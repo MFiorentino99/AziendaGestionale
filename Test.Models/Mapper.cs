@@ -14,6 +14,8 @@ namespace Test.Models
         public MapperInitializer() {
             CreateMap<DTOCliente_Fatture, FHCliente>();
             CreateMap<DTOFattura, FHFattura>();
+            CreateMap<FHFattura,DTOFattura>();
+            CreateMap<FHCliente,DTOCliente>();
         }
         /*
         public static Mapper InitializeMapperCliente()

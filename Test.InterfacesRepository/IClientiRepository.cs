@@ -9,8 +9,8 @@ namespace Test.InterfacesRepository
 {
     public interface IClientiRepository
     {
-        public bool CreateCliente(DTOCliente cliente);
-        public bool DeleteClienteById(string id);
-        public bool UpdateClienteById(string id, DTOCliente cliente);
+        public Task<bool> CreateCliente(DTOCliente cliente);
+        public Task<bool> DeleteClienteById(string id);
+        public Task<bool> UpdateClienteById(string id, DTOCliente cliente);
     }
 }

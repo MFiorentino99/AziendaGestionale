@@ -9,9 +9,9 @@ namespace Test.InterfacesRepository
 {
     public interface IDettagliRepository
     {
-        public bool CreateDettaglio(DTODettaglio dettaglio);
-        public bool UpdateDettaglioById(string fattura,string prodotto,DTODettaglio dettaglio);
-        public bool DeleteDettaglioById(string fattura, string prodotto);   
+        public Task<bool> CreateDettaglio(DTODettaglio dettaglio);
+        public Task<bool> UpdateDettaglioById(string fattura,string prodotto,DTODettaglio dettaglio);
+        public Task<bool> DeleteDettaglioById(string fattura, string prodotto);   
 
     }
 }

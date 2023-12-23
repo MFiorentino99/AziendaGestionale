@@ -10,10 +10,10 @@ namespace Test.InterfacesRepository
 {
     public interface IGestioneRepository
     {
-        public bool UpdateGestioneById(string id, string date, DTOGestione gestione);
-        public bool CreateGestione(DTOGestione gestione);
-        public bool DeleteGestioneById(string id,string date);
-        public bool CategoriaToLowerCase();
+        public Task<bool> UpdateGestioneById(string id, string date, DTOGestione gestione);
+        public Task<bool> CreateGestione(DTOGestione gestione);
+        public Task<bool> DeleteGestioneById(string id,string date);
+        public Task<bool> CategoriaToLowerCase();
         public DateTime DateConverter(string date);
     }
 }

@@ -41,9 +41,9 @@ namespace AziendaGestionale.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateFattura(DTOFattura fattura)
+        public async Task<ActionResult> CreateFatturaAsync(DTOFattura fattura)
         {
-            bool resp = _fattureRepository.CreateFattura(fattura);
+            bool resp = await _fattureRepository.CreateFattura(fattura);
             if (resp)
             {
                 return Ok("Aggiunta eseguita con successo");
@@ -55,9 +55,9 @@ namespace AziendaGestionale.Controllers
         }
 
         [HttpPut("{id}/{data}")]
-        public ActionResult UpdateFatturaById(string id, string data, DTOFattura fattura)
+        public async Task<ActionResult> UpdateFatturaByIdAsync(string id, string data, DTOFattura fattura)
         {
-            bool resp = _fattureRepository.UpdateFatturaByID(id, data,fattura);
+            bool resp = await _fattureRepository.UpdateFatturaByID(id, data,fattura);
             if (resp)
             {
                 return Ok("Aggiornamento eseguito con successo");
@@ -68,9 +68,9 @@ namespace AziendaGestionale.Controllers
         }
 
         [HttpDelete("{id}/{data}")]
-        public ActionResult DeleteFatturaById(string id,string data)
+        public async Task<ActionResult> DeleteFatturaByIdAsync(string id,string data)
         {
-            bool resp = _fattureRepository.DeleteFatturaByID(id, data);
+            bool resp = await _fattureRepository.DeleteFatturaByID(id, data);
             if (resp)
             {
                 return Ok("Eleiminazione eseguita con successo");

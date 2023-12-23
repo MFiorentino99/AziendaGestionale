@@ -20,6 +20,8 @@ namespace Test.Queries
         {
             _connectionString = configuration.GetConnectionString("oracleDB");
         }
+
+
         public async Task<IEnumerable<DTOCliente_Fatture>> PrintListInvoicesPerClient()
         {
             var clienteDictionary = new Dictionary<string, DTOCliente_Fatture>();

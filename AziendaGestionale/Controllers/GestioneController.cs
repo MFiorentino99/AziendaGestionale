@@ -45,9 +45,9 @@ namespace AziendaGestionale.Controllers
 
         
         [HttpPost]
-        public ActionResult Post(DTOGestione gestione)
+        public async Task<ActionResult> PostAsync(DTOGestione gestione)
         {
-            bool response = _gestioneRepository.CreateGestione(gestione);
+            bool response = await _gestioneRepository.CreateGestione(gestione);
             if (response)
             {
                 return Ok("Aggiunta eseguita con successo");
@@ -60,9 +60,9 @@ namespace AziendaGestionale.Controllers
 
         
         [HttpPut("{id}/{data}")]
-        public ActionResult Put(string id,string data, DTOGestione gestione)
+        public async Task<ActionResult> PutAsync(string id,string data, DTOGestione gestione)
         {
-            bool resp = _gestioneRepository.UpdateGestioneById(id,data,gestione);
+            bool resp = await _gestioneRepository.UpdateGestioneById(id,data,gestione);
             if(resp)
             {
                 return Ok("Aggiornamento eseguito con successo");
@@ -75,9 +75,9 @@ namespace AziendaGestionale.Controllers
 
         
         [HttpDelete("{id}/{data}")]
-        public ActionResult Delete(string id, string data)
+        public async Task<ActionResult> DeleteAsync(string id, string data)
         {
-            bool resp = _gestioneRepository.DeleteGestioneById(id, data);
+            bool resp = await _gestioneRepository.DeleteGestioneById(id, data);
             if (resp)
             {
                 return Ok("Cancellazione eseguita con successo");
@@ -90,9 +90,9 @@ namespace AziendaGestionale.Controllers
 
         [HttpPut]
         [Route("/CategoriaInMinuscolo")]
-        public ActionResult CategoriaToLowerCase()
+        public async Task<ActionResult> CategoriaToLowerCaseAsync()
         {
-            bool resp = _gestioneRepository.CategoriaToLowerCase();
+            bool resp = await _gestioneRepository.CategoriaToLowerCase();
             if (resp)
             {
                 return Ok("Operazione eseguita con successo");
