@@ -40,9 +40,9 @@ namespace AziendaGestionale.Controllers
         }
 
         [HttpPut("{fattura}-{prodotto}")]
-        public ActionResult UpdateDettaglioById(string fattura, string prodotto, DTODettaglio dettaglio)
+        public async Task<ActionResult> UpdateDettaglioById(string fattura, string prodotto, DTODettaglio dettaglio)
         {
-            var resp = _dettagliRepository.UpdateDettaglioById(fattura, prodotto, dettaglio);
+            var resp =await _dettagliRepository.UpdateDettaglioById(fattura, prodotto, dettaglio);
             if (resp)
             {
                 return Ok("Aggiornamento eseguito con successo");
@@ -53,9 +53,9 @@ namespace AziendaGestionale.Controllers
             }
         }
         [HttpPost]
-        public ActionResult CreateDettaglio(DTODettaglio dettaglio)
+        public async Task<ActionResult> CreateDettaglio(DTODettaglio dettaglio)
         {
-            var resp = _dettagliRepository.CreateDettaglio(dettaglio);
+            var resp = await _dettagliRepository.CreateDettaglio(dettaglio);
             if (resp)
             {
                 return Ok("Aggiunta avvenuta con successo");
@@ -67,9 +67,9 @@ namespace AziendaGestionale.Controllers
         }
 
         [HttpDelete("{fattura}-{prodotto}")]
-        public ActionResult DeleteDettaglioById(string fattura, string prodotto)
+        public async Task<ActionResult> DeleteDettaglioById(string fattura, string prodotto)
         {
-            var resp = _dettagliRepository.DeleteDettaglioById(fattura,prodotto);
+            var resp = await _dettagliRepository.DeleteDettaglioById(fattura,prodotto);
             if (resp)
             {
                 return Ok("Eliminazione avvenuta con successo");

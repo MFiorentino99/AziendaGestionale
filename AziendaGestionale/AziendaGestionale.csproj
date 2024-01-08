@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\Ctrl\**" />
+    <Compile Remove="Models\**" />
+    <Content Remove="Controllers\Ctrl\**" />
+    <Content Remove="Models\**" />
+    <EmbeddedResource Remove="Controllers\Ctrl\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="Controllers\Ctrl\**" />
+    <None Remove="Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Dapper" Version="2.1.24" />

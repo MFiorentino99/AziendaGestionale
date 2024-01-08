@@ -16,6 +16,8 @@ namespace Test.Models
             CreateMap<DTOFattura, FHFattura>();
             CreateMap<FHFattura,DTOFattura>();
             CreateMap<FHCliente,DTOCliente>();
+            CreateMap<FHFatturaReading,DTOFattura>();
+            CreateMap<FHClienteReading, DTOCliente>();
         }
         /*
         public static Mapper InitializeMapperCliente()

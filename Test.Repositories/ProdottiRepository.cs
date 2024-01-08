@@ -21,14 +21,14 @@ namespace Test.Repositories
             _connectionString = config.GetConnectionString("oracleDB");
         }
 
-        public bool CreateProdotto(DTOProdotto prodotto)
+        public async Task<bool> CreateProdotto(DTOProdotto prodotto)
         {
             string query = $@"INSERT INTO {_tableName} 
                             (NOME,CATEGORIA,COSTO_PRODUZIONE)
                             VALUES (LOWER(:NOME), :CATEGORIA, :COSTO)";
             using (var conn = new OracleConnection(_connectionString))
             {
-               var response = conn.Execute(query, new
+               var response =await conn.ExecuteAsync(query, new
                     {
                         NOME = prodotto.Nome,
                         CATEGORIA = prodotto.Categoria,
@@ -45,13 +45,13 @@ namespace Test.Repositories
             }
         }
 
-        public bool DeleteProdototById(string id)
+        public async Task<bool> DeleteProdototById(string id)
         {
             string query = $@"DELETE FROM {_tableName} WHERE RTRIM(NOME)=LOWER(:NOME)";
             using (var conn = new OracleConnection(_connectionString))
             {
                 
-                    var resp = conn.Execute(query, new { NOME = id });
+                    var resp =await conn.ExecuteAsync(query, new { NOME = id });
                 if(resp > 0) 
                 { 
                    return true;
@@ -63,13 +63,13 @@ namespace Test.Repositories
             }
         }
 
-        public bool UpdateProdottoById(string id, DTOProdotto prodotto)
+        public async Task<bool> UpdateProdottoById(string id, DTOProdotto prodotto)
         {
             string query = $@"UPDATE {_tableName} SET CATEGORIA=:CATEGORIA, COSTO_PRODUZIONE=:COSTO
                             WHERE RTRIM(NOME)=LOWER(:NOME)";
             using (var conn = new OracleConnection(_connectionString))
             {
-                var response = conn.Execute(query, new
+                var response =await conn.ExecuteAsync(query, new
                 {
                     NOME = id,
                     CATEGORIA = prodotto.Categoria,

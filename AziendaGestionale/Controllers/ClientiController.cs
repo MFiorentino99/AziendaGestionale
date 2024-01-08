@@ -38,9 +38,9 @@ namespace AziendaGestionale.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateCliente(DTOCliente cliente)
+        public async Task<ActionResult> CreateCliente(DTOCliente cliente)
         {
-            bool resp = _clientiRepository.CreateCliente(cliente);
+            bool resp = await _clientiRepository.CreateCliente(cliente);
             if(resp)
             {
                 return Ok("Aggiunta eseguita con successo");
@@ -52,9 +52,9 @@ namespace AziendaGestionale.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateClienteById(string id,DTOCliente cliente)
+        public async Task<ActionResult> UpdateClienteById(string id,DTOCliente cliente)
         {
-            bool resp = _clientiRepository.UpdateClienteById(id, cliente);
+            bool resp =await _clientiRepository.UpdateClienteById(id, cliente);
             if(resp)
             {
                 return Ok("Aggiornamento eseguito con successo");
@@ -66,9 +66,9 @@ namespace AziendaGestionale.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteClienteById(string id)
+        public async Task<ActionResult> DeleteClienteById(string id)
         {
-            bool resp = _clientiRepository.DeleteClienteById(id);
+            bool resp =await _clientiRepository.DeleteClienteById(id);
             if( resp)
             {
                 return Ok("Eliminazione eseguita con successo");

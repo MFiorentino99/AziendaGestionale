@@ -1,5 +1,4 @@
-﻿using AziendaGestionale.Models.DTO;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Test.Models;
 using Test.Queries;
 using Test.Repositories;
@@ -43,9 +42,9 @@ namespace AziendaGestionale.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post(DTOProdotto element)
+        public async Task<ActionResult> Post(DTOProdotto element)
         {
-            var response = _prodottiRepository.CreateProdotto(element);
+            var response =await _prodottiRepository.CreateProdotto(element);
             if (response )
             {
                 return Ok("Inserimento eseguito con successo");
@@ -57,9 +56,9 @@ namespace AziendaGestionale.Controllers
         }
 
         [HttpPut("{nome}")]
-        public ActionResult Put(string nome, DTOProdotto element)
+        public async Task<ActionResult> Put(string nome, DTOProdotto element)
         {
-            bool resposne = _prodottiRepository.UpdateProdottoById(nome,element);
+            bool resposne = await _prodottiRepository.UpdateProdottoById(nome,element);
             if (resposne)
             {
                 return Ok("Aggiornamento eseguito con successo");
@@ -72,9 +71,9 @@ namespace AziendaGestionale.Controllers
 
         // DELETE api/<ProdottiController>/5
         [HttpDelete("{nome}")]
-        public ActionResult Delete(string nome)
+        public async Task<ActionResult> Delete(string nome)
         {
-            bool response = _prodottiRepository.DeleteProdototById(nome);
+            bool response = await _prodottiRepository.DeleteProdototById(nome);
             if(response)
             {
                 return Ok("Cancellazione eseguita con successo");

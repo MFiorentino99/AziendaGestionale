@@ -32,15 +32,6 @@ namespace AziendaGestionale.Controllers
             
             var queryResp = await  _cliente_FattureQueries.PrintListInvoicesPerClient();
             var result =_fhConversion.GetStringFromDTO(queryResp);
-            /*
-            foreach (var item in queryResp)
-            {
-             str.Append();
-             
-            }
-            
-            _fhConversion.SaveRecordText();
-            */
             return Ok(result.ToString());    
         }
 
@@ -49,38 +40,43 @@ namespace AziendaGestionale.Controllers
         {
             bool controlErrorFatture = false;
             bool controlErrorClienti = false;
-
+            //C:\Users\U-13\Desktop\esercizioInput.txt
             List<DTOFattura> listFatture= _fhConversion.GetDTOFromString(recordsText, out List<DTOCliente> listClienti);
-            
+
+            foreach (DTOCliente cliente in listClienti)
+            {
+                if (! await _clientiRepository.CreateCliente(cliente))
+                {
+                    controlErrorClienti = true;
+                }
+                if (controlErrorClienti)
+                {
+                    return BadRequest("Errore nell'inserimento di Clienti");
+                }
+            }
+
             foreach(DTOFattura fattura in listFatture)
             {
                 if(! await _fattureRepository.CreateFattura(fattura))
                 {
                     controlErrorFatture = true;
                 };
-            }
-            foreach(DTOCliente cliente in listClienti)
-            {
-                if (! await _clientiRepository.CreateCliente(cliente))
+                if (controlErrorClienti)
                 {
-                    controlErrorClienti = true;
+                    return BadRequest("Errore nell'inserimento di Fattura");
                 }
             }
+            
+            
             if(controlErrorFatture && controlErrorClienti)
             {
                 return BadRequest("operazione fallita");
-            }else if (controlErrorClienti)
-            {
-                return BadRequest("Errore nell'nserimento di Clienti");
-            }else if(controlErrorFatture) 
-            {
-                return BadRequest("errore nell'aggiunta di Fatture");
             }
             else
             {
                 return Ok("Operazione riuscita");
             }
-            
+
         }
     }
 }

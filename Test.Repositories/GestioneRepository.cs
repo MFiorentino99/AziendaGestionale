@@ -20,7 +20,7 @@ namespace Test.Repositories
         {
             _connectionString = config.GetConnectionString("oracleDB");
         }
-        public bool CreateGestione(DTOGestione gestione)
+        public async Task<bool> CreateGestione(DTOGestione gestione)
         {
             string query = $@"INSERT INTO {_tableName} 
                 (ID_DIPENDENTE, DATA_ASSEGNAZIONE, SETTORE, CATEGORIA)
@@ -28,7 +28,7 @@ namespace Test.Repositories
             using (var conn = new OracleConnection(_connectionString))
             {
                 
-                 var resp = conn.Execute(query, new
+                 var resp =await  conn.ExecuteAsync(query, new
                             {
                             ID_DIPENDENTE = gestione.Id_dipendente,
                             DATA_ASSEGNAZIONE = gestione.Data_assegnazione,
@@ -46,14 +46,14 @@ namespace Test.Repositories
         }
 
 
-        public bool DeleteGestioneById(string id, string date)
+        public async Task<bool> DeleteGestioneById(string id, string date)
         {
             string query = $@"DELETE FROM {_tableName} 
                                 WHERE RTRIM(ID_DIPENDENTE) =:ID_DIPENDENTE AND DATA_ASSEGNAZIONE=:DATA_ASSEGNAZIONE";
             DateTime d = DateConverter(date);
             using (var conn = new OracleConnection(_connectionString))
             {
-                var resp = conn.Execute(query, new
+                var resp =await conn.ExecuteAsync(query, new
                 {
                     ID_DIPENDENTE = id,
                     DATA_ASSEGNAZIONE = d
@@ -70,7 +70,7 @@ namespace Test.Repositories
             }
         }
 
-        public bool UpdateGestioneById(string id, string date, DTOGestione gestione)
+        public async Task<bool> UpdateGestioneById(string id, string date, DTOGestione gestione)
         {
             DateTime d = DateConverter(date);
             string query = $@"UPDATE {_tableName} SET 
@@ -79,13 +79,14 @@ namespace Test.Repositories
             using (var conn = new OracleConnection(_connectionString))
             {
               
-                    var resp = conn.Execute(query, new
+                    var resp = await conn.ExecuteAsync(query, new
                     {
                         ID_DIPENDENTE = id,
                         DATA_ASSEGNAZIONE = d,
                         SETTORE = gestione.Settore,
                         CATEGORIA = gestione.Categoria
-                    });
+                    })
+        ;
                 if(resp > 0 ) 
                 { 
                     return true;
@@ -108,13 +109,13 @@ namespace Test.Repositories
             }
         }
 
-        public bool CategoriaToLowerCase()
+        public async Task<bool> CategoriaToLowerCase()
         {
             string query = $@"UPDATE {_tableName} SET SETTORE = LOWER(TRIM(SETTORE)),
                  CATEGORIA = LOWER(TRIM(CATEGORIA))";
             using (var conn = new OracleConnection(_connectionString))
             {
-                var res = conn.Execute(query);
+                var res =await conn.ExecuteAsync(query);
                 if (res > 0)
                 {
                     return true;

@@ -15,13 +15,6 @@ namespace Test.Repositories
         {
             _connectionString = congif.GetConnectionString("oracleDB");
         }
-       /* 
-        * public async Task<bool> InsertStringIntoClient_Invoices(string insertText)
-        {
-            return await true;
 
-
-        }
-       */
     }
 }

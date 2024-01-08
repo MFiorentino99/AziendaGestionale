@@ -40,9 +40,9 @@ namespace AziendaGestionale.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateDipendente(DTODipendente dipendente)
+        public async Task<ActionResult> CreateDipendente(DTODipendente dipendente)
         {
-            bool resp = _dipendentiRepository.CreateDipendente(dipendente);
+            bool resp = await _dipendentiRepository.CreateDipendente(dipendente);
             if(resp)
             {
                 return Ok("Aggiunta eseguita con successo");
@@ -54,9 +54,9 @@ namespace AziendaGestionale.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateDipendenteById(string id,DTODipendente dipendente)
+        public async Task<ActionResult> UpdateDipendenteById(string id,DTODipendente dipendente)
         {
-            bool resp = _dipendentiRepository.UpdateDipendenteById(id, dipendente);
+            bool resp =await _dipendentiRepository.UpdateDipendenteById(id, dipendente);
             if (resp)
             {
                 return Ok("Aggiornamento eseguito con successo");
@@ -68,9 +68,9 @@ namespace AziendaGestionale.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteDipendenteById(string id)
+        public async Task<ActionResult> DeleteDipendenteById(string id)
         {
-            bool resp = _dipendentiRepository.DeleteDipendenteById(id);
+            bool resp = await _dipendentiRepository.DeleteDipendenteById(id);
             if (resp)
             {
                 return Ok("Eliminazione eseguita con successo");

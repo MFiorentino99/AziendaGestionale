@@ -1,5 +1,4 @@
-﻿using AziendaGestionale.Models.Entities;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Test.Abstractions;
 using Test.InterfacesRepository;

@@ -19,14 +19,14 @@ namespace Test.Repositories
         {
             _connectionString = configuration.GetConnectionString("oracleDB");
         }
-        public bool CreateDipendente(DTODipendente dipendente)
+        public async Task<bool> CreateDipendente(DTODipendente dipendente)
         {
             string query = $@"INSERT INTO {_tableName} 
                 (ID_DIPENDENTE, NOME, COGNOME, STIPENDIO, SETTORE, CATEGORIA) 
                 VALUES (:ID_DIPENDENTE, :NOME, :COGNOME, :STIPENDIO, :SETTORE, :CATEGORIA)";
             using (var connection = new OracleConnection(_connectionString))
             {
-                var resp = connection.Execute(query, new
+                var resp =await connection.ExecuteAsync(query, new
                 {
                     ID_DIPENDENTE = dipendente.Id_dipendente,
                     NOME = dipendente.Nome,
@@ -46,12 +46,12 @@ namespace Test.Repositories
             };
         }
 
-        public bool DeleteDipendenteById(string id)
+        public async Task<bool> DeleteDipendenteById(string id)
         {
             string query = $@"DELETE FROM {_tableName} WHERE RTRIM(ID_DIPENDENTE) =:ID_DIPENDENTE";
             using (var connection = new OracleConnection(_connectionString))
             {
-                var resp =  connection.Execute(query, new { ID_DIPENDENTE = id });
+                var resp = await connection.ExecuteAsync(query, new { ID_DIPENDENTE = id });
                 if (resp > 0)
                 {
                     return true;
@@ -63,7 +63,7 @@ namespace Test.Repositories
             }
         }
 
-        public bool UpdateDipendenteById(string id, DTODipendente dipendente)
+        public async Task<bool> UpdateDipendenteById(string id, DTODipendente dipendente)
         {
             string query =
                 $@"UPDATE {_tableName} SET 
@@ -72,7 +72,7 @@ namespace Test.Repositories
 
             using (var connection = new OracleConnection(_connectionString))
             {
-                var resp =  connection.Execute(query, new
+                var resp =await connection.ExecuteAsync(query, new
                 {
                     id_dipendente = id,
                     nome = dipendente.Nome,

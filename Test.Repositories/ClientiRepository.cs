@@ -19,37 +19,38 @@ namespace Test.Repositories
         {
             _connectionString = configuration.GetConnectionString("oracleDB");
         }
-        public bool CreateCliente(DTOCliente cliente)
+        public async Task<bool> CreateCliente(DTOCliente cliente)
         {
             string query = $@"INSERT INTO {_tableName} 
                 (ID_CLIENTE, NOME, COGNOME, CITTA) 
-                VALUES (:ID_CLIENTE, :NOME, :COGNOME, :CITTA)"; ;
-            using (var conn = new OracleConnection(_connectionString))
+                VALUES (:ID_CLIENTE, :NOME, :COGNOME, :CITTA)";
+            try
             {
-                var resp = conn.Execute(query, new
+                using (var conn = new OracleConnection(_connectionString))
                 {
-                    ID_CLIENTE = cliente.Id_cliente,
-                    NOME = cliente.Nome,
-                    COGNOME = cliente.Cognome,
-                    CITTA = cliente.Citta
-                });
-                if (resp > 0)
-                {
+                    var resp = await conn.ExecuteAsync(query, new
+                    {
+                        ID_CLIENTE = cliente.Id_cliente,
+                        NOME = cliente.Nome,
+                        COGNOME = cliente.Cognome,
+                        CITTA = cliente.Citta
+                    });
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
             }
+            catch
+            {
+                return false;
+            }
+            
         }
 
-        public bool DeleteClienteById(string id)
+        public async Task<bool> DeleteClienteById(string id)
         {
             string query = $@"DELETE FROM {_tableName} WHERE RTRIM(ID_CLIENTE) =:ID_CLIENTE";
             using (var conn = new OracleConnection(_connectionString))
             {
-                var resp = conn.Execute(query, new { ID_CLIENTE = id });
+                var resp = await conn.ExecuteAsync(query, new { ID_CLIENTE = id });
                 if (resp > 0)
                 {
                     return true;
@@ -61,7 +62,7 @@ namespace Test.Repositories
             }
         }
 
-        public bool UpdateClienteById(string id, DTOCliente cliente)
+        public async Task<bool> UpdateClienteById(string id, DTOCliente cliente)
         {
             string query = $@"UPDATE {_tableName} SET 
                 NOME =:NOME, COGNOME =:COGNOME, CITTA =:CITTA 
@@ -69,7 +70,7 @@ namespace Test.Repositories
 
             using (var conn = new OracleConnection(_connectionString))
             {
-                var resp = conn.Execute(query, new
+                var resp =await conn.ExecuteAsync(query, new
                 {
                     ID_CLIENTE = id,
                     NOME = cliente.Nome,

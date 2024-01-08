@@ -14,11 +14,15 @@ namespace ApplicationLayer
         private List<object> _files;
         private static MultiRecordEngine Engine => new MultiRecordEngine(
             typeof(FHCliente),typeof(FHFattura),typeof(FHinterspace));
-
+        
+        private MultiRecordEngine _engineReadingFile = new MultiRecordEngine(
+            typeof(FHClienteReading),typeof(FHFatturaReading));
+       
         public FileHelperConversion(IMapper mapper)
-        {
+        {            
             _files = new List<object>();
             _mapperInitializer = mapper;
+            _engineReadingFile.RecordSelector = new RecordTypeSelector(new Selector().CustomSelector);
         }
         public string GetStringFromDTO(IEnumerable<DTOCliente_Fatture> resp)
         {
@@ -50,23 +54,22 @@ namespace ApplicationLayer
             Engine.WriteFile("file.txt",_files.ToArray());
         }
 
-        /* inserire la logia che legge la stringa, la mappa nei dto e li restituisce */
         public List<DTOFattura> GetDTOFromString(string recordsText, out List<DTOCliente> clienteList)
         {
             string id_cliente = "";
             clienteList = new List<DTOCliente>();
             List<DTOFattura> listFattura = new List<DTOFattura> ();
-            var result = Engine.ReadFile(recordsText);
+            var result = _engineReadingFile.ReadFile($"{recordsText}");
 
             foreach(var item in result)
             {
-                if (item.GetType() == typeof(FHCliente))
+                if (item.GetType() == typeof(FHClienteReading))
                 {
                     DTOCliente cliente = _mapperInitializer.Map<DTOCliente>(item);
                     clienteList.Add(cliente);
                     id_cliente = cliente.Id_cliente;
                 }
-                if (item.GetType() == typeof(FHFattura))
+                if (item.GetType() == typeof(FHFatturaReading))
                 {
                     DTOFattura fattura = _mapperInitializer.Map<DTOFattura>(item);
                     fattura.Id_cliente = id_cliente;
