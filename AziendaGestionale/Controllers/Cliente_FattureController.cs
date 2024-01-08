@@ -40,7 +40,7 @@ namespace AziendaGestionale.Controllers
         {
             bool controlErrorFatture = false;
             bool controlErrorClienti = false;
-            //C:\Users\U-13\Desktop\esercizioInput.txt
+            
             List<DTOFattura> listFatture= _fhConversion.GetDTOFromString(recordsText, out List<DTOCliente> listClienti);
 
             foreach (DTOCliente cliente in listClienti)
@@ -61,21 +61,13 @@ namespace AziendaGestionale.Controllers
                 {
                     controlErrorFatture = true;
                 };
-                if (controlErrorClienti)
+                if (controlErrorFatture)
                 {
                     return BadRequest("Errore nell'inserimento di Fattura");
                 }
             }
-            
-            
-            if(controlErrorFatture && controlErrorClienti)
-            {
-                return BadRequest("operazione fallita");
-            }
-            else
-            {
-                return Ok("Operazione riuscita");
-            }
+
+            return Ok("Operazione riuscita");
 
         }
     }

@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Test.Models.FileHelpers
 {
-    //[DelimitedRecord("|")]
-    [FixedLengthRecord()]
-    public class FHClienteReading
+    [FixedLengthRecord(FixedMode.AllowLessChars)]
+    public class FHClienteReadingFixed
     {
         [FieldFixedLength(4)]
         public string Id_cliente { get; set; }
@@ -20,6 +19,20 @@ namespace Test.Models.FileHelpers
         [FieldFixedLength(20)]
         public string Citta { get; set; }
 
-        public FHClienteReading() { }
+        public FHClienteReadingFixed() { }
     }
+    
+    /*
+    [DelimitedRecord("|")]
+    public class FHClienteReadingDelimited
+    {
+        
+        public string Id_cliente { get; set; }
+        public string Nome { get; set; }
+        public string Cognome { get; set; }
+        public string Citta { get; set; }
+
+        public FHClienteReadingDelimited() { }
+    }
+    */
 }

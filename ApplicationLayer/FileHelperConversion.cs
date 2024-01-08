@@ -16,7 +16,7 @@ namespace ApplicationLayer
             typeof(FHCliente),typeof(FHFattura),typeof(FHinterspace));
         
         private MultiRecordEngine _engineReadingFile = new MultiRecordEngine(
-            typeof(FHClienteReading),typeof(FHFatturaReading));
+            typeof(FHClienteReadingFixed),typeof(FHFatturaReadingFixed));
        
         public FileHelperConversion(IMapper mapper)
         {            
@@ -41,8 +41,7 @@ namespace ApplicationLayer
                 }
                 records.Add(space);
             }
-           
-            
+
             //_files.AddRange(records);
             
             string str = Engine.WriteString(records);
@@ -56,23 +55,21 @@ namespace ApplicationLayer
 
         public List<DTOFattura> GetDTOFromString(string recordsText, out List<DTOCliente> clienteList)
         {
-            string id_cliente = "";
+           
             clienteList = new List<DTOCliente>();
             List<DTOFattura> listFattura = new List<DTOFattura> ();
             var result = _engineReadingFile.ReadFile($"{recordsText}");
 
             foreach(var item in result)
             {
-                if (item.GetType() == typeof(FHClienteReading))
+                if (item.GetType() == typeof(FHClienteReadingFixed))
                 {
                     DTOCliente cliente = _mapperInitializer.Map<DTOCliente>(item);
                     clienteList.Add(cliente);
-                    id_cliente = cliente.Id_cliente;
                 }
-                if (item.GetType() == typeof(FHFatturaReading))
+                if (item.GetType() == typeof(FHFatturaReadingFixed))
                 {
                     DTOFattura fattura = _mapperInitializer.Map<DTOFattura>(item);
-                    fattura.Id_cliente = id_cliente;
                     listFattura.Add(fattura);
 
                 }

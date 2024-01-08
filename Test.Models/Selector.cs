@@ -12,17 +12,12 @@ namespace Test.Models
     {
         public Type CustomSelector(MultiRecordEngine engine,string recordLine)
         {
-            if(recordLine.Length == 0)
+            if (engine.Options.FieldsNames[0] == "Id_cliente")
             {
-                return null;
-            }
-            if (Char.IsNumber(recordLine[0]))
+                return typeof(FHClienteReadingFixed);
+            }else
             {
-                return typeof(FHClienteReading);
-            }
-            else
-            {
-                return typeof(FHFatturaReading);
+                return typeof(FHFatturaReadingFixed);
             }
         }
     }
