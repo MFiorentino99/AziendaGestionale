@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Test.InterfacesRepository\Test.InterfacesRepository.csproj" />
     <ProjectReference Include="..\Test.Models\Test.Models.csproj" />
+	<ProjectReference Include="..\ExtensionMethods\ExtensionMethods.csproj" />
   </ItemGroup>
 
 </Project>

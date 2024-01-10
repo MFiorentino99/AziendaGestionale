@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ExtensionMethods\ExtensionMethods.csproj" />
     <ProjectReference Include="..\Test.Abstractions\Test.Abstractions.csproj" />
     <ProjectReference Include="..\Test.Models\Test.Models.csproj" />
   </ItemGroup>

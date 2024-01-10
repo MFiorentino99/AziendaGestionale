@@ -15,6 +15,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Queries", "Test.Queries\Test.Queries.csproj", "{3AFEA916-EF0A-4503-8843-85D74E516A24}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Repositories", "Test.Repositories\Test.Repositories.csproj", "{9063A2C7-ED0E-432D-BABB-D8AB0560E1E8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CC39C941-90B8-4D90-9573-AC991BA7E31F} = {CC39C941-90B8-4D90-9573-AC991BA7E31F}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Abstractions", "Test.Abstractions\Test.Abstractions.csproj", "{00AA59A7-F4E1-4D6C-BC15-AA24048C9263}"
 EndProject
@@ -26,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationLayer", "Applica
 	ProjectSection(ProjectDependencies) = postProject
 		{00AA59A7-F4E1-4D6C-BC15-AA24048C9263} = {00AA59A7-F4E1-4D6C-BC15-AA24048C9263}
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtensionMethods", "ExtensionMethods\ExtensionMethods.csproj", "{CC39C941-90B8-4D90-9573-AC991BA7E31F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +66,10 @@ Global
 		{D0F6C357-28F3-4FC8-B529-51800F124290}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0F6C357-28F3-4FC8-B529-51800F124290}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0F6C357-28F3-4FC8-B529-51800F124290}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC39C941-90B8-4D90-9573-AC991BA7E31F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC39C941-90B8-4D90-9573-AC991BA7E31F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC39C941-90B8-4D90-9573-AC991BA7E31F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC39C941-90B8-4D90-9573-AC991BA7E31F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

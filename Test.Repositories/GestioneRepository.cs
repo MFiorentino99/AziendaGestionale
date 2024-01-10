@@ -9,6 +9,7 @@ using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using Microsoft.Extensions.Configuration;
 using System.Globalization;
+using ExtensionMethods;
 
 namespace Test.Repositories
 {
@@ -50,7 +51,7 @@ namespace Test.Repositories
         {
             string query = $@"DELETE FROM {_tableName} 
                                 WHERE RTRIM(ID_DIPENDENTE) =:ID_DIPENDENTE AND DATA_ASSEGNAZIONE=:DATA_ASSEGNAZIONE";
-            DateTime d = DateConverter(date);
+            DateTime d = date.ConvertFromString();
             using (var conn = new OracleConnection(_connectionString))
             {
                 var resp =await conn.ExecuteAsync(query, new
@@ -72,7 +73,7 @@ namespace Test.Repositories
 
         public async Task<bool> UpdateGestioneById(string id, string date, DTOGestione gestione)
         {
-            DateTime d = DateConverter(date);
+            DateTime d = date.ConvertFromString();
             string query = $@"UPDATE {_tableName} SET 
                 SETTORE=:SETTORE, CATEGORIA=:CATEGORIA 
                 WHERE RTRIM(ID_DIPENDENTE)=:ID_DIPENDENTE AND DATA_ASSEGNAZIONE=:DATA_ASSEGNAZIONE";
@@ -95,17 +96,6 @@ namespace Test.Repositories
                 {
                     return false;
                 }
-            }
-        }
-        public DateTime DateConverter(string date)
-        {
-            try
-            {
-                return DateTime.ParseExact(date, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-            }
-            catch (FormatException e)
-            {
-                return DateTime.Parse("01-01-0001", CultureInfo.InvariantCulture);
             }
         }
 

@@ -44,6 +44,7 @@ namespace Test.Queries
                         }
                         if (fatture != null)
                         {
+                            fatture.Id_cliente = cliente.Id_cliente;
                             clienteEntry.FatturaList.Add(fatture);
                         }
                         return clienteEntry;

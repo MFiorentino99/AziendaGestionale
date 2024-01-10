@@ -14,6 +14,5 @@ namespace Test.InterfacesRepository
         public Task<bool> CreateGestione(DTOGestione gestione);
         public Task<bool> DeleteGestioneById(string id,string date);
         public Task<bool> CategoriaToLowerCase();
-        public DateTime DateConverter(string date);
     }
 }

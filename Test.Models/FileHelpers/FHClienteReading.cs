@@ -22,7 +22,7 @@ namespace Test.Models.FileHelpers
         public FHClienteReadingFixed() { }
     }
     
-    /*
+    
     [DelimitedRecord("|")]
     public class FHClienteReadingDelimited
     {
@@ -34,5 +34,5 @@ namespace Test.Models.FileHelpers
 
         public FHClienteReadingDelimited() { }
     }
-    */
+    
 }

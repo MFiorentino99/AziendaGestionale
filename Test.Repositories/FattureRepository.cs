@@ -1,14 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Oracle.ManagedDataAccess.Client;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Test.InterfacesRepository;
 using Test.Models;
 using Dapper;
+using ExtensionMethods;
 
 namespace Test.Repositories
 {
@@ -45,24 +40,12 @@ namespace Test.Repositories
             }
 
         }
-
-        public DateTime DateConverter(string data)
-        {
-            try
-            {
-                return DateTime.ParseExact(data, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-            }
-            catch (FormatException e)
-            {
-                return DateTime.Parse("00/00/0000", CultureInfo.InvariantCulture);
-            }
-        }
-
+        
         public async Task<bool> DeleteFatturaByID(string id, string data)
         {
             string query = $"DELETE FROM {_tableName} WHERE" +
                 $" RTRIM(ID_FATTURA)=:ID_FATTURA AND DATA_VENDITA=:DATA_VENDITA ";
-            DateTime d = DateConverter(data);
+            DateTime d = data.ConvertFromString() ;
             using (var conn = new OracleConnection(_connectionString))
             {
                 var resp = await conn.ExecuteAsync(query, new
@@ -83,7 +66,7 @@ namespace Test.Repositories
 
         public async Task<bool> UpdateFatturaByID(string id, string data, DTOFattura fattura)
         {
-            DateTime d = DateConverter(data);
+            DateTime d = data.ConvertFromString();
             string query = $@"UPDATE {_tableName} SET 
                  ID_VENDITORE =:ID_VENDITORE, ID_CLIENTE =:ID_CLIENTE, TOTALE =:TOTALE
                  WHERE RTRIM(ID_FATTURA)=:ID_FATTURA AND DATA_VENDITA = :DATA_VENDITA";

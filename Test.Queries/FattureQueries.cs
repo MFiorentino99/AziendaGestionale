@@ -1,14 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Oracle.ManagedDataAccess.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Test.Abstractions;
 using Test.Models;
 using Dapper;
 using System.Globalization;
+using ExtensionMethods;
 
 namespace Test.Queries
 {
@@ -58,17 +54,6 @@ namespace Test.Queries
             }
         }
 
-        public DateTime DateConverter(string data)
-        {
-            try
-            {
-                return DateTime.ParseExact(data, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-            }
-            catch (FormatException e)
-            {
-                return DateTime.Parse("00/00/0000", CultureInfo.InvariantCulture);
-            }
-        }
 
         public async Task<IEnumerable<DTOFattura>> GetAll()
         {
@@ -86,7 +71,7 @@ namespace Test.Queries
             string query = $@"SELECT RTRIM(ID_FATTURA) ID_FATTURA, RTRIM(ID_VENDITORE) ID_VENDITORE,
                             RTRIM(ID_CLIENTE) ID_CLIENTE, DATA_VENDITA, TOTALE
                             FROM {_tableName} WHERE RTRIM(ID_FATTURA)=:ID_FATTURA AND DATA_VENDITA = :DATA_VENDITA ";
-            DateTime d = DateConverter(data);
+            DateTime d = data.ConvertFromString();
             using (var conn = new OracleConnection(_connectionString))
             {
                 return await conn.QuerySingleAsync<DTOFattura>(query, new

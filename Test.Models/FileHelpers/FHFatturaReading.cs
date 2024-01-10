@@ -28,7 +28,7 @@ namespace Test.Models.FileHelpers
         public FHFatturaReadingFixed() { }
     }
 
-    /*
+    
     [DelimitedRecord("|")]
     public class FHFatturaReadingDelimited
     {
@@ -46,7 +46,7 @@ namespace Test.Models.FileHelpers
 
         public FHFatturaReadingDelimited() { }
     }
-    */
+    
 
 
 }

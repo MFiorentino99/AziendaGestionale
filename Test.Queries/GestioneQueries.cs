@@ -10,6 +10,7 @@ using Test.Models;
 using Dapper;
 using System.Globalization;
 using Oracle.ManagedDataAccess.Client;
+using ExtensionMethods;
 
 namespace Test.Queries
 {
@@ -39,7 +40,7 @@ namespace Test.Queries
             string query = $@"SELECT RTRIM(ID_DIPENDENTE) ID_DIPENDENTE, DATA_ASSEGNAZIONE, RTRIM(SETTORE) SETTORE, RTRIM(CATEGORIA) CATEGORIA
                 FROM {_tableName} 
                 WHERE ID_DIPENDENTE=:ID_DIPENDENTE AND RTRIM(DATA_ASSEGNAZIONE)=:DATA_ASSEGNAZIONE";
-            DateTime d = DateConverter(date);
+            DateTime d = date.ConvertFromString();
             using (var conn = new OracleConnection(_connectionString))
             {
                     var resp = await conn.QuerySingleAsync<DTOGestione>(query, new
@@ -50,19 +51,6 @@ namespace Test.Queries
                 return resp;
             }
         }
-
-        public DateTime DateConverter(string date)
-        {
-            try
-            {
-                return DateTime.ParseExact(date, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-            }
-            catch (FormatException e)
-            {
-                return DateTime.Parse("01/01/0001", CultureInfo.InvariantCulture);
-            }
-        }
-
         public async Task<IEnumerable<dynamic>> RoleInInvoiceDate()
         {
             string query = $@"SELECT DISTINCT RTRIM(T.ID_DIPENDENTE) ID_DIPENDENTE, RTRIM(G.SETTORE) SETTORE,

@@ -12,6 +12,31 @@ namespace Test.Models
     {
         public Type CustomSelector(MultiRecordEngine engine,string recordLine)
         {
+            
+            if (Char.IsLetter(recordLine[5]) || Char.IsDigit(recordLine[5])) 
+            {
+                if (engine.Options.FieldsNames[0] == "Id_cliente")
+                {
+                    return typeof(FHClienteReadingFixed);
+                }
+                else
+                {
+                    return typeof(FHFatturaReadingFixed);
+                }
+            }
+            else
+            {
+                if (engine.Options.FieldsNames[0] == "Id_cliente")
+                {
+                    return typeof(FHClienteReadingDelimited);
+                }
+                else
+                {
+                    return typeof(FHFatturaReadingDelimited);
+                }
+            }
+            /*
+
             if (engine.Options.FieldsNames[0] == "Id_cliente")
             {
                 return typeof(FHClienteReadingFixed);
@@ -19,6 +44,7 @@ namespace Test.Models
             {
                 return typeof(FHFatturaReadingFixed);
             }
+            */
         }
     }
 }

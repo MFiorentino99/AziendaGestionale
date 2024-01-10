@@ -11,7 +11,6 @@ namespace Test.Abstractions
     {
         public Task<IEnumerable<DTOGestione>> GetAll();
         public Task<DTOGestione> GetGestioneById(string id, string date);
-        public DateTime DateConverter(string date);
         public Task<IEnumerable<dynamic>> RoleInInvoiceDate();
     }
 }

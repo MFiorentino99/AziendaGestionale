@@ -14,7 +14,6 @@ namespace Test.Abstractions
         public Task<IEnumerable<dynamic>> AnnualIncome();
         public Task<IEnumerable<dynamic>> AnnualIncomePerClient();
         public Task<IEnumerable<dynamic>> AnnualIncomePerClientWithDetails();
-        public DateTime DateConverter(string data);
 
     }
 }
