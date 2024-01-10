@@ -48,7 +48,8 @@ namespace Test.Queries
         public async Task<IEnumerable<dynamic>> ChainedNameSurname()
         {
             string query = $@"SELECT RTRIM(ID_DIPENDENTE) ID_DIPENDENTE,
-                            RTRIM(NOME) || ' ' || RTRIM(COGNOME) AS CREDENZIALI FROM {_tableName}";
+                            RTRIM(NOME) || ' ' || RTRIM(COGNOME) AS CREDENZIALI FROM {_tableName}
+                            ORDER BY ID_DIPENDENTE";
             using (var connection = new OracleConnection(_connectionString))
             {
                 var resp = await connection.QueryAsync(query);
@@ -91,7 +92,8 @@ namespace Test.Queries
                 string query =
                     $@"SELECT RTRIM(ID_DIPENDENTE) ID_DIPENDENTE, RTRIM(NOME) NOME, RTRIM(COGNOME) COGNOME,
                        STIPENDIO, RTRIM(SETTORE) SETTORE, RTRIM(CATEGORIA) CATEGORIA
-                       FROM {_tableName}";
+                       FROM {_tableName}
+                       ORDER BY ID_DIPENDENTE";
                 var resp = await connection.QueryAsync<DTODipendente>(query);
                 return resp;
             }

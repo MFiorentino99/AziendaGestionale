@@ -23,7 +23,8 @@ namespace Test.Queries
         public async Task<IEnumerable<DTODettaglio>> GetAll()
         {
             string query = $@"SELECT RTRIM(ID_FATTURA) ID_FATTURA, RTRIM(PRODOTTO) PRODOTTO, QUANTITY AS QUANTITA, COSTO 
-                            FROM {_tableName}";
+                            FROM {_tableName}
+                            ORDER BY ID_FATTURA";
             using (var conn = new OracleConnection(_connectionString))
             {
                 var resp = await conn.QueryAsync<DTODettaglio>(query);

@@ -22,7 +22,8 @@ namespace Test.Queries
         public async Task<IEnumerable<DTOCliente>> GetAll()
         {
             string query = $@"SELECT RTRIM(ID_CLIENTE) ID_CLIENTE, RTRIM(NOME) NOME, RTRIM(COGNOME) COGNOME, RTRIM(CITTA) CITTA
-                              FROM {_tableName}";
+                              FROM {_tableName}
+                              ORDER BY ID_CLIENTE";
             using (var conn = new OracleConnection(_connectionString))
             {
                 var resp = await conn.QueryAsync<DTOCliente>(query);

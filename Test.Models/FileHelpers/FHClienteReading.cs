@@ -26,7 +26,6 @@ namespace Test.Models.FileHelpers
     [DelimitedRecord("|")]
     public class FHClienteReadingDelimited
     {
-        
         public string Id_cliente { get; set; }
         public string Nome { get; set; }
         public string Cognome { get; set; }

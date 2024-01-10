@@ -11,40 +11,31 @@ namespace Test.Models
     public class Selector
     {
         public Type CustomSelector(MultiRecordEngine engine,string recordLine)
-        {
-            
-            if (Char.IsLetter(recordLine[5]) || Char.IsDigit(recordLine[5])) 
+        {           
+
+            if (recordLine.Contains("|")) 
             {
-                if (engine.Options.FieldsNames[0] == "Id_cliente")
+                if (Char.IsLetter(recordLine[0]))
                 {
-                    return typeof(FHClienteReadingFixed);
+                    return typeof(FHFatturaReadingDelimited);
                 }
                 else
                 {
-                    return typeof(FHFatturaReadingFixed);
+                    return typeof(FHClienteReadingDelimited);
                 }
             }
             else
             {
-                if (engine.Options.FieldsNames[0] == "Id_cliente")
+                if (Char.IsLetter(recordLine[0]))
                 {
-                    return typeof(FHClienteReadingDelimited);
+                    return typeof(FHFatturaReadingFixed);
+
                 }
                 else
                 {
-                    return typeof(FHFatturaReadingDelimited);
+                    return typeof(FHClienteReadingFixed);
                 }
             }
-            /*
-
-            if (engine.Options.FieldsNames[0] == "Id_cliente")
-            {
-                return typeof(FHClienteReadingFixed);
-            }else
-            {
-                return typeof(FHFatturaReadingFixed);
-            }
-            */
         }
     }
 }

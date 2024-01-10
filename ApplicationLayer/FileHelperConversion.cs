@@ -16,7 +16,7 @@ namespace ApplicationLayer
             typeof(FHCliente),typeof(FHFattura),typeof(FHinterspace));
         
         private MultiRecordEngine _engineReadingFile = new MultiRecordEngine(
-            typeof(FHClienteReadingFixed),typeof(FHFatturaReadingFixed));
+            typeof(FHClienteReadingFixed),typeof(FHFatturaReadingFixed),typeof(FHClienteReadingDelimited),typeof(FHFatturaReadingDelimited));
        
         public FileHelperConversion(IMapper mapper)
         {            
@@ -42,7 +42,7 @@ namespace ApplicationLayer
                 records.Add(space);
             }
 
-            //_files.AddRange(records);
+            _files.AddRange(records);
             
             string str = Engine.WriteString(records);
             return str;

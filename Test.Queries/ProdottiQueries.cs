@@ -24,7 +24,8 @@ namespace Test.Queries
         public async Task<IEnumerable<DTOProdotto>> GetAll()
         {
             string query = $@"SELECT RTRIM(NOME) NOME, RTRIM(CATEGORIA) CATEGORIA, COSTO_PRODUZIONE
-                            FROM {_tableName}";
+                            FROM {_tableName}
+                            ORDER BY NOME";
             using(var conn = new OracleConnection(_connectionString))
             {
                 var result = await conn.QueryAsync<DTOProdotto>(query); 

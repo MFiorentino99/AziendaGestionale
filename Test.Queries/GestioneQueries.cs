@@ -26,7 +26,8 @@ namespace Test.Queries
         public async Task<IEnumerable<DTOGestione>> GetAll()
         {
             string query = $@"SELECT RTRIM(ID_DIPENDENTE) ID_DIPENDENTE, DATA_ASSEGNAZIONE, RTRIM(SETTORE) SETTORE, RTRIM(CATEGORIA) CATEGORIA
-                     FROM {_tableName}";
+                        FROM {_tableName}
+                        ORDER BY ID_DIPENDENTE,DATA_ASSEGNAZIONE DESC";
             using (var conn = new OracleConnection(_connectionString))
             {
                 var resp = await conn.QueryAsync<DTOGestione>(query);

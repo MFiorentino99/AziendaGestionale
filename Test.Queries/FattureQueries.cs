@@ -19,8 +19,9 @@ namespace Test.Queries
         public async Task<IEnumerable<dynamic>> AnnualIncome()
         {
             string query = $@"SELECT EXTRACT(YEAR FROM DATA_VENDITA) AS ANNO, SUM(TOTALE) AS TOTALE_ANNUO 
-               FROM {_tableName} 
-              GROUP BY (EXTRACT(YEAR FROM DATA_VENDITA))";
+                FROM {_tableName} 
+                GROUP BY (EXTRACT(YEAR FROM DATA_VENDITA))
+                ORDER BY ANNO";
             using (var connection = new OracleConnection(_connectionString))
             {
                 return await connection.QueryAsync(query);     
@@ -59,7 +60,8 @@ namespace Test.Queries
         {
             string query = $@"SELECT RTRIM(ID_FATTURA) ID_FATTURA, RTRIM(ID_VENDITORE) ID_VENDITORE,
                             RTRIM(ID_CLIENTE) ID_CLIENTE, DATA_VENDITA, TOTALE
-                            FROM {_tableName}";
+                            FROM {_tableName}
+                            ORDER BY ID_FATTURA";
             using (var conn = new OracleConnection(_connectionString))
             {
                 return await conn.QueryAsync<DTOFattura>(query);
