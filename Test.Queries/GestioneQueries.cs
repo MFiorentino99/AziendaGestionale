@@ -36,12 +36,20 @@ namespace Test.Queries
             }
         }
 
-        public async Task<DTOGestione> GetGestioneById(string id, string date)
+        public async Task<DTOGestione?> GetGestioneById(string id, string date)
         {
             string query = $@"SELECT RTRIM(ID_DIPENDENTE) ID_DIPENDENTE, DATA_ASSEGNAZIONE, RTRIM(SETTORE) SETTORE, RTRIM(CATEGORIA) CATEGORIA
                 FROM {_tableName} 
                 WHERE ID_DIPENDENTE=:ID_DIPENDENTE AND RTRIM(DATA_ASSEGNAZIONE)=:DATA_ASSEGNAZIONE";
-            DateTime d = date.ConvertFromString();
+            DateTime d;
+            try
+            {
+                d = date.ConvertFromString();
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
             using (var conn = new OracleConnection(_connectionString))
             {
                     var resp = await conn.QuerySingleAsync<DTOGestione>(query, new

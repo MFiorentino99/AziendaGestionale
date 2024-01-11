@@ -11,14 +11,19 @@ namespace ExtensionMethods
     {
         public static DateTime ConvertFromString(this string str)
         {
-            try
+            str = str.EliminateDivisor();
+            if(str.Length == 8)
             {
-                return DateTime.ParseExact(str, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                if (!DateTime.TryParseExact(str, "ddMMyyyy", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out var result))
+                    throw new FormatException();
+                return result;
             }
-            catch (FormatException e)
+            else
             {
-                return DateTime.Parse("00/00/0000", CultureInfo.InvariantCulture);
+                throw new ArgumentException();
             }
+
         }
+
     }
 }

@@ -32,6 +32,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationLayer", "Applica
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtensionMethods", "ExtensionMethods\ExtensionMethods.csproj", "{CC39C941-90B8-4D90-9573-AC991BA7E31F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Exception", "Test.Exception\Test.Exception.csproj", "{E05E97A4-5C1A-4264-A517-D49963B61E14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,10 @@ Global
 		{CC39C941-90B8-4D90-9573-AC991BA7E31F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC39C941-90B8-4D90-9573-AC991BA7E31F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC39C941-90B8-4D90-9573-AC991BA7E31F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E05E97A4-5C1A-4264-A517-D49963B61E14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E05E97A4-5C1A-4264-A517-D49963B61E14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E05E97A4-5C1A-4264-A517-D49963B61E14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E05E97A4-5C1A-4264-A517-D49963B61E14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

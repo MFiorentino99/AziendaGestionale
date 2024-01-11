@@ -68,12 +68,21 @@ namespace Test.Queries
             }
         }
 
-        public async Task<DTOFattura> GetById(string id, string data)
+        public async Task<DTOFattura?> GetById(string id, string data)
         {
             string query = $@"SELECT RTRIM(ID_FATTURA) ID_FATTURA, RTRIM(ID_VENDITORE) ID_VENDITORE,
                             RTRIM(ID_CLIENTE) ID_CLIENTE, DATA_VENDITA, TOTALE
                             FROM {_tableName} WHERE RTRIM(ID_FATTURA)=:ID_FATTURA AND DATA_VENDITA = :DATA_VENDITA ";
-            DateTime d = data.ConvertFromString();
+            DateTime d;
+            try
+            {
+                d = data.ConvertFromString();
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+            
             using (var conn = new OracleConnection(_connectionString))
             {
                 return await conn.QuerySingleAsync<DTOFattura>(query, new

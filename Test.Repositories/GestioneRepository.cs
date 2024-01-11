@@ -51,7 +51,15 @@ namespace Test.Repositories
         {
             string query = $@"DELETE FROM {_tableName} 
                                 WHERE RTRIM(ID_DIPENDENTE) =:ID_DIPENDENTE AND DATA_ASSEGNAZIONE=:DATA_ASSEGNAZIONE";
-            DateTime d = date.ConvertFromString();
+            DateTime d;
+            try
+            {
+                d= date.ConvertFromString();
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
             using (var conn = new OracleConnection(_connectionString))
             {
                 var resp =await conn.ExecuteAsync(query, new
@@ -73,7 +81,15 @@ namespace Test.Repositories
 
         public async Task<bool> UpdateGestioneById(string id, string date, DTOGestione gestione)
         {
-            DateTime d = date.ConvertFromString();
+            DateTime d;
+            try
+            {
+                d= date.ConvertFromString();
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
             string query = $@"UPDATE {_tableName} SET 
                 SETTORE=:SETTORE, CATEGORIA=:CATEGORIA 
                 WHERE RTRIM(ID_DIPENDENTE)=:ID_DIPENDENTE AND DATA_ASSEGNAZIONE=:DATA_ASSEGNAZIONE";

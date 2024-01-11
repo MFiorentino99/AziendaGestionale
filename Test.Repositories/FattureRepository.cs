@@ -45,7 +45,15 @@ namespace Test.Repositories
         {
             string query = $"DELETE FROM {_tableName} WHERE" +
                 $" RTRIM(ID_FATTURA)=:ID_FATTURA AND DATA_VENDITA=:DATA_VENDITA ";
-            DateTime d = data.ConvertFromString() ;
+            DateTime d;
+            try
+            {
+                d= data.ConvertFromString() ;
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
             using (var conn = new OracleConnection(_connectionString))
             {
                 var resp = await conn.ExecuteAsync(query, new
@@ -66,7 +74,16 @@ namespace Test.Repositories
 
         public async Task<bool> UpdateFatturaByID(string id, string data, DTOFattura fattura)
         {
-            DateTime d = data.ConvertFromString();
+            DateTime d;
+            try
+            {
+                d= data.ConvertFromString();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
             string query = $@"UPDATE {_tableName} SET 
                  ID_VENDITORE =:ID_VENDITORE, ID_CLIENTE =:ID_CLIENTE, TOTALE =:TOTALE
                  WHERE RTRIM(ID_FATTURA)=:ID_FATTURA AND DATA_VENDITA = :DATA_VENDITA";
